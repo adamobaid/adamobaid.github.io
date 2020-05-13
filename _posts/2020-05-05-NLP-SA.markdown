@@ -668,12 +668,6 @@ Vectorizers in Python are very flexibile and support many other tasks  like remo
 
 
 [1. Scikit-learn](https://scikit-learn.org/)
+[2. SciPy](https://docs.scipy.org/doc/numpy/reference/)
+[4. Applied text Mining](https://www.coursera.org/learn/python-text-mining) 
 
-[2](https://docs.scipy.org/doc/numpy/reference/)
-
-[3] (https://www.coursera.org/learn/python-text-mining)
-
-[4] Applied text Mining in Python course https://www.coursera.org/learn/python-text-mining
-
-[5] https://en.wikipedia.org/wiki/Document-term_matrix
-[6] http://www.tfidf.com/
