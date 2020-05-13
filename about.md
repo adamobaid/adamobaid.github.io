@@ -23,8 +23,8 @@ Work Experience
 ======
 * <strong> Software QA: Natural Language Understanding (Feb 2019 - April 2020)</strong>
 [Cerence Inc.](https://www.cerence.com/)
-  * Developing software tests for AI Voice Assistant
-  * Testing Natural Lagnuage Understanding components and tools 
+  * AI Voice Assistant products
+  * Testing Natural Lagnuage Understanding components and tools
   * Python, Jira, Jenkins, SVN, Excel
   
 * <strong> Software Developer (Aug 2017 - Jan 2019)</strong>
