@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Linked Lists data structure in Python | Adam Obaid</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Linked Lists data structure in Python" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A singly linked List can be thought of as a collection of elements (data points) where each element points to the next one, ending with the “tail” element which points to Nothing. In doubly linked lists, elements also reference their previous neighbor." />
+<meta property="og:description" content="A singly linked List can be thought of as a collection of elements (data points) where each element points to the next one, ending with the “tail” element which points to Nothing. In doubly linked lists, elements also reference their previous neighbor." />
+<link rel="canonical" href="http://localhost:4000/jekyll/update/2020/04/18/linked-lists.html" />
+<meta property="og:url" content="http://localhost:4000/jekyll/update/2020/04/18/linked-lists.html" />
+<meta property="og:site_name" content="Adam Obaid" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-18T19:26:00-04:00" />
+<script type="application/ld+json">
+{"headline":"Linked Lists data structure in Python","dateModified":"2020-04-18T19:26:00-04:00","datePublished":"2020-04-18T19:26:00-04:00","url":"http://localhost:4000/jekyll/update/2020/04/18/linked-lists.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2020/04/18/linked-lists.html"},"description":"A singly linked List can be thought of as a collection of elements (data points) where each element points to the next one, ending with the “tail” element which points to Nothing. In doubly linked lists, elements also reference their previous neighbor.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Adam Obaid" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Adam Obaid</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Linked Lists data structure in Python</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-04-18T19:26:00-04:00" itemprop="datePublished">Apr 18, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>A singly linked List can be thought of as a collection of elements (data points) where each element points to the next one, ending with the “tail” element which points to Nothing. In doubly linked lists, elements also reference their previous neighbor.</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
+<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SinglyElement</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="bp">self</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="bp">None</span>
+</code></pre></div></div>
+
+<p>Doubly linked lists can be thought of as a two-way street while singly linked lists are one way from head to tail.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DoublyElement</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="bp">self</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">previous</span> <span class="o">=</span> <span class="bp">None</span>
+</code></pre></div></div>
+<h2 id="linked-lists-basic-operations-in-python">Linked Lists Basic Operations in Python</h2>
+
+<p>This arrangmeent allows for fast insertion and deletion operations, because only a few pointers will need to be updated to keep the same order. Unlike arrays where all indices must be updated to account for the shift caused by an add or delete operations.</p>
+
+<p>On the other hand, arrays handle accessing and searching much faster, because in a linked list one have to start searching from the head of the list no matter the location of the targeted element.</p>
+
+<p>To define the list itself, 3 properties are needed: head, tail and length.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">tail</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<p>Next is to figure out how certain operations will work in the linked list. For example, to insert an element to the begining of the list, the following adjustmenets are needed:</p>
+
+<p>The new element must be assigned as the new head of the list
+the next property of the new element must point to the old head
+In a doubly linked list, an extra operation is needed, which is to update the previous propertry to the old head to point to the new element.</p>
+
+<h2 id="inserting-elements">Inserting Elements</h2>
+
+<p><strong>To add an element to the end of the list or “push”:</strong></p>
+<ul>
+  <li>set the new element to be the new tail of the list</li>
+  <li>set next proptery of the old tail to point to the new element</li>
+  <li>and finally increase the length of the list by 1.</li>
+</ul>
+
+<p>Note that there’s no need to update the next property of the new element to point to None, since it is None when it was instantiated. An edge case to look out for here is if the list is completely empty (there is no head), in this case we can simply set the new element to be the head and the tail.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+    <span class="n">new_element</span> <span class="o">=</span> <span class="n">SinglyElement</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">head</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">new_element</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">tail</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">head</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">tail</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">new_element</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">new_element</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span>
+</code></pre></div></div>
+
+<p>In a doubly linked list, there’s an addtional step of setting the previous property of the new element to point to the old tail, that is <code class="highlighter-rouge">new_element.pervious = self.tail</code></p>
+
+<p><strong>To add an element to the beginging of the list</strong>, the process involves manipulating the head property and the pointers of the element(s). For example, in a doubly linked list:</p>
+<ul>
+  <li>set the previous property of the old head to the new element</li>
+  <li>set the head of the list to the new element</li>
+  <li>set the next property of the new element to point to the old head</li>
+  <li>set the previous property of the new head to None</li>
+</ul>
+
+<h2 id="removing-elements">Removing Elements</h2>
+
+<p>The logic behind removing an element from the beginging of the list is similar to the above. The head of the list must now point to the new element, the new element .next will point to the old head, and the length of the list will increase by 1. In case of Dounly linked lists, there is the addtional step of updating the .previous of the old head to point to the new element too.</p>
+
+<p>A big difference between singly linked lists and doubgly linked lists takes places when removing elements from the end of the list. In the case of singly lists, the code must start by traversing the whole list from the head, until it reaches the tail, then perform the pointers update. On the other hand, In doubly lists, one can simply utilize the previous property of the tail; eliminating the need to traverse the whole list before being able to remove the last element.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># removing an element at the end of a singly lined list
+</span><span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">head</span> <span class="o">==</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="n">popped_element</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">head</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">popped_element</span><span class="p">.</span><span class="nb">next</span><span class="p">):</span>
+        <span class="n">new_tail</span> <span class="o">=</span> <span class="n">popped_element</span>  <span class="c1"># keeps track of tail - pre
+</span>        <span class="n">current</span> <span class="o">=</span> <span class="n">popped_element</span><span class="p">.</span><span class="nb">next</span>  <span class="c1"># keeps track of current - curernt - post
+</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">new_tail</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">tail</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">length</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">popped_element</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># removing an element at the end of a doubly linked list 
+</span><span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">head</span> <span class="o">==</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    
+    <span class="n">popped_element</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">tail</span>
+    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">tail</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">popped_element</span><span class="p">.</span><span class="n">prev</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">tail</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">popped_element</span><span class="p">.</span><span class="n">prev</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">length</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">popped_element</span>
+</code></pre></div></div>
+
+<h2 id="removing-or-inserting-elements-at-a-specific-position">Removing or Inserting Elements at a specific position</h2>
+
+<p>Because there is no notion of indices in linked lists, accessing elements as straightfroward as in arrays or lists. As seen in singly lists, when removing an element from the end, we need to traverse the whole list starting from the head until we reach the wanted position. In doubly lists, this can be improved a bit by utilizing the previous propertry, which in this case will allow us to start traveresing from the tail or the head of the list.</p>
+
+<p>Here’s an example using singly lists</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">Insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span> 
+    <span class="c1"># check edge cases
+</span>    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">length</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    <span class="c1"># If the user wants to insert at the beg. &gt; call Push
+</span>    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">==</span> <span class="bp">self</span><span class="p">.</span><span class="n">length</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="c1"># If the user wants to insert at the beg. &gt; call unshift
+</span>    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">unsift</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Start at the head
+</span>    <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">head</span>
+    <span class="c1"># traveres until target
+</span>    <span class="k">while</span> <span class="p">(</span><span class="n">counter</span> <span class="o">!=</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">.</span><span class="nb">next</span>
+        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    
+    <span class="c1"># Create new element by invoking class Element    
+</span>    <span class="n">new_element</span> <span class="o">=</span> <span class="n">SinglyElement</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>  
+    <span class="c1"># Get the node before insertion position
+</span>    <span class="n">pre_node</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># Store the .next of the previous element in a temporary variable
+</span>    <span class="n">temp</span> <span class="o">=</span> <span class="n">pre_node</span><span class="p">.</span><span class="nb">next</span>
+    <span class="c1"># point the .next of previous element to the new element
+</span>    <span class="n">pre_node</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">new_element</span> 
+    <span class="c1"># point new node's next to element on the right of the new node
+</span>    <span class="n">new_element</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">temp</span>  
+    <span class="c1"># increasing the length of the list by 1
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">length</span> <span class="o">+=</span><span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<p>I will soon add more advanced operations :)</p>
+
+  </div><a class="u-url" href="/jekyll/update/2020/04/18/linked-lists.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Adam Obaid</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Adam Obaid</li><li><a class="u-email" href="mailto:adamobaid@outlook.com">adamobaid@outlook.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/adamobaid"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">adamobaid</span></a></li><li><a href="https://www.twitter.com/adamobaid4"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">adamobaid4</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>MSc. Electrical Engineering. Software developer. Former research assistant at CEM Lab, McGill</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

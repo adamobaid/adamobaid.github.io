@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Employee Management System using Python &amp; Pandas | Adam Obaid</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Employee Management System using Python &amp; Pandas" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="In this post I’m going to explore how OOP concepts such as abstraction, inheritance, encapsulation and other nitty-gritty details are applied in Python by building an Employee Management Library for company X. Employees will be represented as objects and each employee will have attributes and functions they can perform. After the basics, I will add the ability to retreive employee data from a remote url, explore the structure of the remote data and store it in a Pandas DataFrame for further work. Documented source code can be found in this repository" />
+<meta property="og:description" content="In this post I’m going to explore how OOP concepts such as abstraction, inheritance, encapsulation and other nitty-gritty details are applied in Python by building an Employee Management Library for company X. Employees will be represented as objects and each employee will have attributes and functions they can perform. After the basics, I will add the ability to retreive employee data from a remote url, explore the structure of the remote data and store it in a Pandas DataFrame for further work. Documented source code can be found in this repository" />
+<link rel="canonical" href="http://localhost:4000/jekyll/update/2020/05/01/OOP.html" />
+<meta property="og:url" content="http://localhost:4000/jekyll/update/2020/05/01/OOP.html" />
+<meta property="og:site_name" content="Adam Obaid" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-01T19:26:00-04:00" />
+<script type="application/ld+json">
+{"headline":"Employee Management System using Python &amp; Pandas","dateModified":"2020-05-01T19:26:00-04:00","datePublished":"2020-05-01T19:26:00-04:00","url":"http://localhost:4000/jekyll/update/2020/05/01/OOP.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2020/05/01/OOP.html"},"description":"In this post I’m going to explore how OOP concepts such as abstraction, inheritance, encapsulation and other nitty-gritty details are applied in Python by building an Employee Management Library for company X. Employees will be represented as objects and each employee will have attributes and functions they can perform. After the basics, I will add the ability to retreive employee data from a remote url, explore the structure of the remote data and store it in a Pandas DataFrame for further work. Documented source code can be found in this repository","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Adam Obaid" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Adam Obaid</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Employee Management System using Python &amp; Pandas</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-05-01T19:26:00-04:00" itemprop="datePublished">May 1, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>In this post I’m going to explore how OOP concepts such as abstraction, inheritance, encapsulation and other nitty-gritty details are applied in Python by building an Employee Management Library for company X. Employees will be represented as objects and each employee will have attributes and functions they can perform. After the basics, I will add the ability to retreive employee data from a remote url, explore the structure of the remote data and store it in a Pandas DataFrame for further work.  Documented source code can be found in this <a href="https://github.com/adamobaid/Python-OOP">repository</a></p>
+
+<p>Object-Oriented programming is based on the idea of storing data and behavior by wrapping them with structures called Objects. In OOP theory, objects are created and customized using classes. Classes can be thought of as a blueprint for a behavior that needs to be implemented.</p>
+
+<h1 id="employee-management-system">Employee Management System</h1>
+
+<p><strong>Summary of concepts / featurs:</strong></p>
+
+<ul>
+  <li>Object attributes and class attributes</li>
+  <li>Object methods, class methods, static methods and special (dunder) methods</li>
+  <li>Customized repr() and str() to give class objects more readability</li>
+  <li>Customized add() and len() to emulate builtin behavior.</li>
+  <li>Inheritance: Developer and Manager sub-classes</li>
+  <li>Connecting to company API and creating objects using retrieved data</li>
+  <li>Encapsulation: using the methods of one class as attributes in another</li>
+  <li>Setter and Deleter functionality using property decorators</li>
+  <li>Storing Employee data in Pandas DataFrames for futher analysis</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Imports used
+</span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+</code></pre></div></div>
+
+<h3 id="object-attributes-and-class-attributes">Object attributes and class attributes</h3>
+<p>Object attributes or instances attributes can be unqiue from one object to another, while class attributes are shared amongest all objects. In this scenario, we can think of the anual raise the company gives to employees as a class attribute. Another class attribute that is the same amongest all objects is the number of employees in the company.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Employee</span><span class="p">:</span>
+    
+    <span class="n">num_of_emps</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">raise_amount</span> <span class="o">=</span> <span class="mf">1.04</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">pay</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="s">'.'</span> <span class="o">+</span> <span class="n">last</span> <span class="o">+</span> <span class="s">'@email.com'</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pay</span> <span class="o">=</span> <span class="n">pay</span>
+        <span class="n">Employee</span><span class="p">.</span><span class="n">num_of_emps</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Creating instancs of the class
+</span><span class="n">employee_1</span> <span class="o">=</span> <span class="n">Employee</span><span class="p">(</span><span class="s">'Adam'</span><span class="p">,</span> <span class="s">'Obaid'</span><span class="p">,</span> <span class="mi">50000</span><span class="p">)</span>
+<span class="n">employee_2</span> <span class="o">=</span> <span class="n">Employee</span><span class="p">(</span><span class="s">'Test'</span><span class="p">,</span> <span class="s">'Employee'</span><span class="p">,</span> <span class="mi">60000</span><span class="p">)</span>
+<span class="c1"># Accessing instance attributes
+</span><span class="k">print</span><span class="p">(</span><span class="n">employee_1</span><span class="p">.</span><span class="n">first</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">employee_1</span><span class="p">.</span><span class="n">pay</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Adam
+50000
+</code></pre></div></div>
+
+<p>Class attributes can be accesssed the name of the class, i.e., <code class="highlighter-rouge">Employee.raise_amount</code> or through the instance <code class="highlighter-rouge">self.raise_amount</code> because when accessing an attribute in python, it first checks if the instance has that attribute, if not, it searches for it in the class attributes. To see the attributes associated with an object, the <strong>dict</strong> method can be used.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># print the namespace of employee 1
+</span><span class="k">print</span><span class="p">(</span><span class="n">employee_1</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'first': 'Adam', 'last': 'Obaid', 'email': 'Adam.Obaid@email.com', 'pay': 50000}
+</code></pre></div></div>
+
+<h3 id="object-methods">Object methods</h3>
+<p>Object or instance methods are functions that perform actions associated with the object itself, not some general operation related to the class. An example of this in this application would be the below <code class="highlighter-rouge">fullname()</code> method, where it combines the first and last name attributes of the instance and returns the full name. Another example would a function that changes the raise amount for a specific employee, not for the whole class. This can be accomplished by passing <code class="highlighter-rouge">self</code> to the function, which is convention for the class instance, i.e., <code class="highlighter-rouge">employee1</code>. Using <code class="highlighter-rouge">self</code> in the <code class="highlighter-rouge">apply_raise()</code> also allows other classes to override this class if need be.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Employee</span><span class="p">:</span>
+    
+    <span class="n">num_of_emps</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">raise_amount</span> <span class="o">=</span> <span class="mf">1.04</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">pay</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="s">'.'</span> <span class="o">+</span> <span class="n">last</span> <span class="o">+</span> <span class="s">'@email.com'</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pay</span> <span class="o">=</span> <span class="n">pay</span>
+        <span class="n">Employee</span><span class="p">.</span><span class="n">num_of_emps</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">'{} {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">last</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">apply_raise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pay</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">pay</span> <span class="o">*</span> <span class="bp">self</span><span class="p">.</span><span class="n">raise_amount</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">employee_1</span> <span class="o">=</span> <span class="n">Employee</span><span class="p">(</span><span class="s">'Adam'</span><span class="p">,</span> <span class="s">'Obaid'</span><span class="p">,</span> <span class="mi">50000</span><span class="p">)</span>
+<span class="n">employee_2</span> <span class="o">=</span> <span class="n">Employee</span><span class="p">(</span><span class="s">'Test'</span><span class="p">,</span> <span class="s">'Employee'</span><span class="p">,</span> <span class="mi">60000</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Raise amount'</span><span class="p">,</span> <span class="n">Employee</span><span class="p">.</span><span class="n">raise_amount</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Salary before raise'</span><span class="p">,</span><span class="n">employee_1</span><span class="p">.</span><span class="n">pay</span><span class="p">)</span>
+<span class="n">employee_1</span><span class="p">.</span><span class="n">apply_raise</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Salary after raise'</span><span class="p">,</span><span class="n">employee_1</span><span class="p">.</span><span class="n">pay</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Raise amount 1.04
+Salary before raise 50000
+Salary after raise 52000
+</code></pre></div></div>
+
+<h3 id="special-dunder-methods">Special (dunder) Methods</h3>
+<p>There’s an excellent lecture (5) on the topic of using these special methods to impelement some higher-level behavior that is builtin in Python. Some example of these methods includ <code class="highlighter-rouge">__rep__</code> and <code class="highlighter-rouge">__str__</code>, which when customized, give class objects more readability. but this can be extended further to emulate  more advanced behaviors like implementing custom addition and subtraction operations for class objects. This is known and called by the name of - The Data Model in Python Documentations(3)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Employee</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">pay</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="s">'.'</span> <span class="o">+</span> <span class="n">last</span> <span class="o">+</span> <span class="s">'@email.com'</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pay</span> <span class="o">=</span> <span class="n">pay</span>
+
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">'{} {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">last</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">apply_raise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pay</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">pay</span> <span class="o">*</span> <span class="bp">self</span><span class="p">.</span><span class="n">raise_amt</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""
+        unambigous representation of the obj for developers
+        """</span>
+        
+        <span class="k">return</span> <span class="s">"Employee('{}', '{}', {})"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">last</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pay</span><span class="p">)</span>
+   
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""
+        a string to copy &amp; past and recreate the object with
+        """</span>
+        
+        <span class="k">return</span> <span class="s">'{} - {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">fullname</span><span class="p">(),</span> <span class="bp">self</span><span class="p">.</span><span class="n">email</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="s">"""
+        Returns the sum of two employee's salaries
+        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">pay</span> <span class="o">+</span> <span class="n">other</span><span class="p">.</span><span class="n">pay</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""
+        Returns the number of characters in an employee's full name
+        """</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">fullname</span><span class="p">())</span>
+
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">emp_1</span> <span class="o">=</span> <span class="n">Employee</span><span class="p">(</span><span class="s">'Adam'</span><span class="p">,</span> <span class="s">'Obaid'</span><span class="p">,</span> <span class="mi">50000</span><span class="p">)</span>
+<span class="n">emp_2</span> <span class="o">=</span> <span class="n">Employee</span><span class="p">(</span><span class="s">'Test'</span><span class="p">,</span> <span class="s">'Employee'</span><span class="p">,</span> <span class="mi">60000</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'Addtion two employees is '</span><span class="p">,</span><span class="n">emp_1</span> <span class="o">+</span> <span class="n">emp_2</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'The length of an employee is '</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">emp_1</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Addtion two employees is  110000
+The length of an employee is  10
+</code></pre></div></div>
+
+<h3 id="propertry-decortators">Propertry Decortators</h3>
+<p>Allows us to give the class, getter, setter and deleter. This is useful whenever you have a method that changes the value of an attribute. For example, In the previous email method in the Employee class, it used to depend on first and last names properties such that if the first name was changed at a later point, the email will still keep the first name.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Employee</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+
+    <span class="o">@</span><span class="nb">property</span>
+    <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">'{}.{}@email.com'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">last</span><span class="p">)</span>
+ 
+    <span class="o">@</span><span class="nb">property</span>
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">'{} {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">last</span><span class="p">)</span>
+    <span class="c1"># if we wanna be able to do emp_1.fullname = "Adam Obaid"
+</span>    
+    <span class="o">@</span><span class="n">fullname</span><span class="p">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">name</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+    
+    <span class="o">@</span><span class="n">fullname</span><span class="p">.</span><span class="n">deleter</span>
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Delete Name!'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">first</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">last</span> <span class="o">=</span> <span class="bp">None</span>
+</code></pre></div></div>
+
+<p><strong>Note</strong></p>
+<ul>
+  <li>why not set setters and getters instead of using classmethod to set raise amount?</li>
+  <li>because raise amount propertry is not correlated with any other attribute</li>
+</ul>
+
+<h3 id="inheritance">Inheritance</h3>
+
+<p>Inheritance gives the ability to create new classes that are already loaded with attribute and methods from another, more mature class. This allows one to upgrade a class or add functionality without affecting the parent class.</p>
+
+<p>In this case, good candidates for child classes would be Intern, Developer and Manager Employees which can have different attributes and methods. For example, to add <code class="highlighter-rouge">prog_lang</code> attribute to employees who are developers. This is done by giving the class <code class="highlighter-rouge">Developer</code> its own <code class="highlighter-rouge">__init__</code> constructor method, while at the same time extending from the constructor of the parent’s class, i.e., <code class="highlighter-rouge">super().__ini__(attrs)</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Developer</span><span class="p">(</span><span class="n">Employee</span><span class="p">):</span>
+    <span class="c1"># customize raise amount for this class
+</span>    <span class="n">raise_amt</span> <span class="o">=</span> <span class="mf">1.10</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">pay</span><span class="p">,</span> <span class="n">prog_lang</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">pay</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">prog_lang</span> <span class="o">=</span> <span class="n">prog_lang</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Manager</span><span class="p">(</span><span class="n">Employee</span><span class="p">):</span>
+    <span class="c1"># list of employees that this manager supervises 
+</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">pay</span><span class="p">,</span> <span class="n">employees</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">pay</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">employees</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">employees</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">employees</span> <span class="o">=</span> <span class="n">employees</span>
+    <span class="c1"># not methods to populate that list or dict or manipulate it
+</span>    <span class="k">def</span> <span class="nf">add_emp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emp</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">emp</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">employees</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">employees</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">emp</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">remove_emp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emp</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">emp</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">employees</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">employees</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">emp</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">print_emps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">emp</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">employees</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span>
+                <span class="n">emp</span><span class="p">.</span><span class="n">fullname</span><span class="p">())</span>           
+</code></pre></div></div>
+
+<h3 id="creating-objects-using-an-api-response">Creating objects using an API response</h3>
+
+<p>For a previous project I needed to retreive some data from an API and then store it in a Pandas DataFrame. I will do the same here assuming that Employees data is stored somewhere on the company’s website. To achieve this I created a class called <code class="highlighter-rouge">Account</code> which connects to the API using <code class="highlighter-rouge">requests</code> then fetches the Employees attributes (first name, last name, …etc) then uses them to create Employee objects and finally, store them in a Panda’s DataFrame for further work possibly.</p>
+
+<p>This will act as an alternative constructor to the Employee class objects, au lie de <code class="highlighter-rouge">__init__</code> the main constructors. In Python,<code class="highlighter-rouge">@classmethod</code> is usually used to do this. For the purpose of demonstrating I will use this generic user API <a href="https://randomuser.me/api/">https://randomuser.me/api/</a> as employee information. I did explore the structure of the Json response from said API and based on that I wrote below code.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># by adding this method to class Employee
+</span><span class="o">@</span><span class="nb">classmethod</span>    
+<span class="k">def</span> <span class="nf">from_api</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+    <span class="s">"""
+    Retreives Employee profile from API
+    Creates Employee Object 
+    """</span>   
+    <span class="n">url</span> <span class="o">=</span> <span class="s">"https://randomuser.me/api/"</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span>
+    <span class="n">parsed_response</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">parsed_response</span><span class="p">[</span><span class="s">"results"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="s">'first'</span><span class="p">]</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="s">'last'</span><span class="p">]</span>
+    <span class="n">pay</span> <span class="o">=</span> <span class="mi">60000</span> <span class="c1"># default base salary
+</span>    <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">pay</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="storing-employees-in-pandas-dataframe">Storing Employees in Panda’s DataFrame</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Note how I used encapsulation to share information between the two classes
+</span><span class="k">class</span> <span class="nc">Accounts</span><span class="p">:</span>
+    <span class="s">"""
+    The Accounts Object has the following attributes and methods:
+    
+    Attributes
+    ======
+    employees: list of employees to store in a Pandas Dataframe     
+    """</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""
+        Instantiates list of employees
+        """</span>
+        
+        <span class="bp">self</span><span class="p">.</span><span class="n">employees</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">create_employee</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""
+        adds a single employee to the list attribute 
+        """</span>
+        
+        <span class="bp">self</span><span class="p">.</span><span class="n">employees</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">Employee</span><span class="p">.</span><span class="n">from_api</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">create_multiple_employees</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_users</span><span class="p">):</span>
+        <span class="s">"""
+        adds multiple Employees to the list attribute
+        """</span>
+        
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_users</span><span class="p">):</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">create_employee</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">employees_to_pandas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""
+        Returns a DataFrame of the objects found in the employees list
+        """</span>
+        
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">employees</span><span class="p">)):</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">t</span><span class="p">.</span><span class="n">__dict__</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">employees</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">df</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># creating an account object, retrieve 20 employees and store them in a DataFrame
+</span><span class="n">object_</span> <span class="o">=</span> <span class="n">Accounts</span><span class="p">()</span>
+<span class="n">object_</span><span class="p">.</span><span class="n">create_multiple_employees</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">object_</span><span class="p">.</span><span class="n">employees_to_pandas</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first</th>
+      <th>last</th>
+      <th>pay</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Jen</td>
+      <td>Ward</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Rigo</td>
+      <td>Manthey</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Brad</td>
+      <td>Shelton</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Line</td>
+      <td>Laurent</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Jeanine</td>
+      <td>Thomas</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Axel</td>
+      <td>Henry</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Nalan</td>
+      <td>Velioğlu</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>آدرین</td>
+      <td>نجاتی</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>آراد</td>
+      <td>قاسمی</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Jo</td>
+      <td>Garza</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Afşar</td>
+      <td>Erçetin</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Eden</td>
+      <td>Talma</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Begüm</td>
+      <td>Balcı</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Joakim</td>
+      <td>Daae</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Larry</td>
+      <td>Knight</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Théo</td>
+      <td>Da Silva</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Cristobal</td>
+      <td>Velasco</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Thea</td>
+      <td>Martin</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Oscar</td>
+      <td>Andersen</td>
+      <td>60000</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Kathy</td>
+      <td>Thomas</td>
+      <td>60000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h1 id="references">References</h1>
+<ol>
+  <li><a href="https://docs.python.org/3/">Python3.8 Documentations</a></li>
+  <li><a href="https://docs.python.org/3/reference/datamodel.html">Python Data Model</a></li>
+  <li><a href="https://requests.readthedocs.io/en/master/">Requests: HTTP for Humans</a></li>
+  <li><a href="https://docs.python.org/3/reference/datamodel.html">C. Schafer OOP Tutorial</a></li>
+  <li><a href="https://www.youtube.com/watch?v=cKPlPJyQrt4">J. Powell: PyData 2017</a></li>
+</ol>
+
+
+  </div><a class="u-url" href="/jekyll/update/2020/05/01/OOP.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Adam Obaid</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Adam Obaid</li><li><a class="u-email" href="mailto:adamobaid@outlook.com">adamobaid@outlook.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/adamobaid"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">adamobaid</span></a></li><li><a href="https://www.twitter.com/adamobaid4"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">adamobaid4</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>MSc. Electrical Engineering. Software developer. Former research assistant at CEM Lab, McGill</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

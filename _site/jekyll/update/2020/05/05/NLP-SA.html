@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>NLP Classificaiton Model for Sentiment Analysis | Adam Obaid</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="NLP Classificaiton Model for Sentiment Analysis" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors for the machine learning models." />
+<meta property="og:description" content="While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors for the machine learning models." />
+<link rel="canonical" href="http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html" />
+<meta property="og:url" content="http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html" />
+<meta property="og:site_name" content="Adam Obaid" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-05T19:26:00-04:00" />
+<script type="application/ld+json">
+{"headline":"NLP Classificaiton Model for Sentiment Analysis","dateModified":"2020-05-05T19:26:00-04:00","datePublished":"2020-05-05T19:26:00-04:00","url":"http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html"},"description":"While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors for the machine learning models.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Adam Obaid" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Adam Obaid</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">NLP Classificaiton Model for Sentiment Analysis</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-05-05T19:26:00-04:00" itemprop="datePublished">May 5, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors for the machine learning models.</p>
+
+<p><a href="https://github.com/adamobaid/NLP">Repositoary</a></p>
+
+<p>I used a logistic regression model to predict negative/positive reviews after using a Bag of Words model to generate features from text.</p>
+
+<p>Tags: Scikit-learn, Numpy and</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'data/Amazon_Unlocked_Mobile.csv'</span><span class="p">)</span>
+<span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Product Name</th>
+      <th>Brand Name</th>
+      <th>Price</th>
+      <th>Rating</th>
+      <th>Reviews</th>
+      <th>Review Votes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>5</td>
+      <td>I feel so LUCKY to have found this used (phone...</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>4</td>
+      <td>nice phone, nice up grade from my pantach revu...</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>5</td>
+      <td>Very pleased</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>4</td>
+      <td>It works good but it goes slow sometimes but i...</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>4</td>
+      <td>Great phone to replace my lost phone. The only...</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(308277, 7)
+</code></pre></div></div>
+
+<h3 id="pre-processing">Pre-processing</h3>
+
+<p>After droping missing values, I created a column that serves as the target value for the model. This is a binary value that is either 1 (Positively Rated) or 0 (Negatively Rated). I’m assuming here that any score below 3 out of 5 is negative.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># drop rows with missing values
+</span><span class="n">df</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c1"># Assume ratings below 3 are un-neutral and remove them
+</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'Rating'</span><span class="p">]</span><span class="o">!=</span><span class="mi">3</span><span class="p">]</span>
+<span class="c1"># create a new column that serves as a target for the model
+</span><span class="n">df</span><span class="p">[</span><span class="s">'Positively Rated'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'Rating'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Product Name</th>
+      <th>Brand Name</th>
+      <th>Price</th>
+      <th>Rating</th>
+      <th>Reviews</th>
+      <th>Review Votes</th>
+      <th>Positively Rated</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>5</td>
+      <td>I feel so LUCKY to have found this used (phone...</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>4</td>
+      <td>nice phone, nice up grade from my pantach revu...</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>5</td>
+      <td>Very pleased</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>4</td>
+      <td>It works good but it goes slow sometimes but i...</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>4</td>
+      <td>Great phone to replace my lost phone. The only...</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>1</td>
+      <td>I already had a phone with problems... I know ...</td>
+      <td>1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>2</td>
+      <td>The charging port was loose. I got that solder...</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>2</td>
+      <td>Phone looks good but wouldn't stay charged, ha...</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>5</td>
+      <td>I originally was using the Samsung S2 Galaxy f...</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>"CLEAR CLEAN ESN" Sprint EPIC 4G Galaxy SPH-D7...</td>
+      <td>Samsung</td>
+      <td>199.99</td>
+      <td>5</td>
+      <td>This is a great product it came after two days...</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Looking at the mean of the target value column, it is evident that the two classes in the set are inbalanced. The imabalce is not drastic as seen in Bank-Fraud detection datasets, where the class imbalance is much more significant because most of the entries charactrized as safe.</p>
+
+<p>This requires careful evaluation of the model, as using the accuracy metric alone will not reflect the true performance of the model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># mean of this column shows that we have inbalanced classes
+</span><span class="n">df</span><span class="p">[</span><span class="s">'Positively Rated'</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.7482686025879323
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="c1"># spliting the dataset into training and testing sets
+</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s">'Reviews'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s">'Positively Rated'</span><span class="p">],</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># checking a random query in the training set
+</span><span class="k">print</span><span class="p">(</span><span class="s">'X_train first entry:</span><span class="se">\n\n</span><span class="s">'</span><span class="p">,</span> <span class="n">X_train</span><span class="p">[</span><span class="mi">75</span><span class="p">])</span>
+<span class="c1"># what is the shape of the training set after the split
+</span><span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n\n</span><span class="s">X_train shape:'</span><span class="p">,</span> <span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X_train first entry:
+
+ The keys are a little hard to hit, and I didn't expect a Spanish keyboard. But overall, a very good phone.
+
+
+X_train shape: (231207,)
+</code></pre></div></div>
+
+<h3 id="features-extraction">Features Extraction</h3>
+
+<ol>
+  <li>Bag of Words Model</li>
+</ol>
+
+<p>Before the data is fed into an algorithm, it needs to be converted into a form that the algorithm can work with. i.e., the data needs to be represented numericlly. When dealing with text tasks, the <strong>Bag of Words (BoW)</strong> model is a popular approach.</p>
+
+<p>Using Scikit in Python we have access to <code class="highlighter-rouge">CountVectorizer</code> allows us to use BoW by convertng a collection of text documents into a matrix of words counts - works by first tokenizing the data and then building the vocabulary.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="c1"># creating an instance of the vectorizer, and fit it with training data
+</span><span class="n">vect</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">().</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>After fitting the vectorizer with the training data, we can use it get useful information.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># looking at every 2000 features -- small sense of what the vocav looks like -- messy
+</span><span class="n">vect</span><span class="p">.</span><span class="n">get_feature_names</span><span class="p">()[::</span><span class="mi">2000</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['00',
+ '4less',
+ 'adr6275',
+ 'assignment',
+ 'blazingly',
+ 'cassettes',
+ 'condishion',
+ 'debi',
+ 'dollarsshipping',
+ 'esteem',
+ 'flashy',
+ 'gorila',
+ 'human',
+ 'irullu',
+ 'like',
+ 'microsaudered',
+ 'nightmarish',
+ 'p770',
+ 'poori',
+ 'quirky',
+ 'responseive',
+ 'send',
+ 'sos',
+ 'synch',
+ 'trace',
+ 'utiles',
+ 'withstanding']
+</code></pre></div></div>
+
+<p>To get a snse of what the vocabulary looks like, I’m looking at stepping randomly into the data. I see words like <code class="highlighter-rouge">00</code>, <code class="highlighter-rouge">adr6275</code>, <code class="highlighter-rouge">4less</code>, it seems a little messy.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># how many features?
+</span><span class="nb">len</span><span class="p">(</span><span class="n">vect</span><span class="p">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>53216
+</code></pre></div></div>
+
+<p>Using the vectorizer’s <code class="highlighter-rouge">transform()</code> method on the training data, I converted it to a <code class="highlighter-rouge">document-term matrix</code>, whcih I find the <a href="https://en.wikipedia.org/wiki/Document-term_matrix">Wikipedia definion</a> of, very consise.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Producing the document-term matrix 
+</span><span class="n">X_train_vectorized</span> <span class="o">=</span> <span class="n">vect</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_train_vectorized</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;231207x53216 sparse matrix of type '&lt;class 'numpy.int64'&gt;'
+    with 6117776 stored elements in Compressed Sparse Row format&gt;
+</code></pre></div></div>
+
+<p>The result is a very large <strong>sparse-matrix</strong> where each row corrosponds to a document and each column is a word from our training vocabolary. The entries in the matrix represents the number of time each word appears in each documents, which explains why the matrix is sparse (i.e., Most entries are zero). The number of words is way larger than the number of words that might appear in an Amazon single review.</p>
+
+<p>This matrix can now be used to learn a model using <strong>logistic regression</strong>, which is a good option for high-dimensional datasets that are sparse. It is also very easy to train and interpret.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="c1"># Train the model
+</span><span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">().</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_vectorized</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/sklearn/linear_model/_logistic.py:938: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+
+
+
+
+
+LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
+                   intercept_scaling=1, l1_ratio=None, max_iter=100,
+                   multi_class='auto', n_jobs=None, penalty='l2',
+                   random_state=None, solver='lbfgs', tol=0.0001, verbose=0,
+                   warm_start=False)
+</code></pre></div></div>
+
+<p>Since the dataset contains classes that are imbalanced, it is not a good idea to use evaluation metric like the simple accuracy metric.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+
+<span class="c1"># Predict the transformed test documents
+</span><span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">vect</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'AUC: '</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>AUC:  0.9206361352734463
+</code></pre></div></div>
+
+<p>The AUC score of the logistic model is 92% when tested against the test set. Note that before obtaining the predictions, the vectorizer object needs to be transformed with the test set as well.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># get the feature names as numpy array
+</span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">vect</span><span class="p">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+
+<span class="c1"># Sort the coefficients from the model
+</span><span class="n">sorted_coef_index</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">argsort</span><span class="p">()</span>
+
+<span class="c1"># Find the 10 smallest and 10 largest coefficients
+</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Smallest Coefs:</span><span class="se">\n</span><span class="s">{}</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">feature_names</span><span class="p">[</span><span class="n">sorted_coef_index</span><span class="p">[:</span><span class="mi">10</span><span class="p">]]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Largest Coefs: </span><span class="se">\n</span><span class="s">{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">feature_names</span><span class="p">[</span><span class="n">sorted_coef_index</span><span class="p">[:</span><span class="o">-</span><span class="mi">11</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Smallest Coefs:
+['worst' 'garbage' 'junk' 'unusable' 'false' 'worthless' 'useless'
+ 'crashing' 'disappointing' 'awful']
+
+Largest Coefs: 
+['excelent' 'excelente' 'exelente' 'loving' 'loves' 'perfecto' 'excellent'
+ 'complaints' 'awesome' 'buen']
+</code></pre></div></div>
+
+<p>Looking at the 10 smallest and 10 largets model cofficients after sorting them, it is evident that the model has connected words like disappointing, garbage, and unusable to negative reviews. And words like excellent, love and amazing ot positive reviews. The 10 largest coefficients are being indexed using [:-11:-1] so the list returned is in order of largest to smallest</p>
+
+<ol>
+  <li>Tf-idf</li>
+</ol>
+
+<p>Term Frequency - Inverse Document Frequency [6]. Allows to weight words in terms of how important they are in a document where high weight is given to terms that appear frequently in a particular document, but don’t appear much in the corpus.</p>
+
+<p>Features with low tfidf are either commonly used across all documents or rarely used and only occur in long documents. features with high tf-idf are frequently used within specific documents but rarely across all documents</p>
+
+<p>because it uses the same tokenization technique used by CountVectorizer, it will return the same number of features**</p>
+
+<p><strong>a good way of reducing the number of features, and might help reduce overfitting when using both CountVectorizer and tdidf, by passing <code class="highlighter-rouge">min_df</code> argument, which specifies the minimum number a word has to appear in a document to be considered</strong>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="n">vect</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">min_df</span><span class="o">=</span><span class="mi">5</span><span class="p">).</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">vect</span><span class="p">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>17951
+</code></pre></div></div>
+
+<p>Looking at the number of features now it down to 17951 from 53216 after adding said condition above.</p>
+
+<p>Applying LR to the tfidf again by transforming the training and testing data, fiting the model and obtaining predictions. It shows that the same performance can be obtained using a smaller number of features.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_train_vectorized</span> <span class="o">=</span> <span class="n">vect</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_vectorized</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">vect</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'AUC: '</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/sklearn/linear_model/_logistic.py:938: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+
+
+AUC:  0.9265848398605042
+</code></pre></div></div>
+
+<p>looking at the list of smallest and largest tfidf. the list of small ones, either commonly appeared in all reviews, or rarely appeared in very long reviews. what is the relationship with the length of the review largesT: appeared frequently in a review, but not commonly across all reiews</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Storing feature names in a Numpy array
+</span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">vect</span><span class="p">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+
+<span class="n">sorted_tfidf_index</span> <span class="o">=</span> <span class="n">X_train_vectorized</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="n">toarray</span><span class="p">()[</span><span class="mi">0</span><span class="p">].</span><span class="n">argsort</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'Smallest tfidf:</span><span class="se">\n</span><span class="s">{}</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">feature_names</span><span class="p">[</span><span class="n">sorted_tfidf_index</span><span class="p">[:</span><span class="mi">10</span><span class="p">]]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Largest tfidf: </span><span class="se">\n</span><span class="s">{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">feature_names</span><span class="p">[</span><span class="n">sorted_tfidf_index</span><span class="p">[:</span><span class="o">-</span><span class="mi">11</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Smallest tfidf:
+['commenter' 'pthalo' 'warmness' 'storageso' 'aggregration' '1300'
+ '625nits' 'a10' 'submarket' 'brawns']
+
+Largest tfidf: 
+['defective' 'batteries' 'gooood' 'epic' 'luis' 'goood' 'basico'
+ 'aceptable' 'problems' 'excellant']
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sorted_coef_index</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">argsort</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'Smallest Coefs:</span><span class="se">\n</span><span class="s">{}</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">feature_names</span><span class="p">[</span><span class="n">sorted_coef_index</span><span class="p">[:</span><span class="mi">10</span><span class="p">]]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Largest Coefs: </span><span class="se">\n</span><span class="s">{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">feature_names</span><span class="p">[</span><span class="n">sorted_coef_index</span><span class="p">[:</span><span class="o">-</span><span class="mi">11</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Smallest Coefs:
+['not' 'worst' 'useless' 'disappointed' 'terrible' 'return' 'waste' 'poor'
+ 'horrible' 'doesn']
+
+Largest Coefs: 
+['love' 'great' 'excellent' 'perfect' 'amazing' 'awesome' 'perfectly'
+ 'easy' 'best' 'loves']
+</code></pre></div></div>
+
+<p>In the previous BoW model, the actual words order within sentences was not taken into consideration. That is to say, there is no context, meaning. A demonstration of this would be to compare two sentences, with the same vocabulary, but contain different meaning.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># These reviews are treated the same by our current model
+</span><span class="k">print</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">vect</span><span class="p">.</span><span class="n">transform</span><span class="p">([</span><span class="s">'not an issue, phone is working'</span><span class="p">,</span>
+                                    <span class="s">'an issue, phone is not working'</span><span class="p">])))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1 0]
+</code></pre></div></div>
+
+<p><strong>Adding n-grams</strong>
+One way of fixing this is is by adding a sense of context to the model. This is done by adding <strong>sequences of word features</strong> known as n-grams. For example a bi-grams gives pairs of adjacent words. This is conveniently done by passing an n-gram argument to the <code class="highlighter-rouge">CountVectorizer</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># min document frequency of 5 and extracting 1-grams and 2-grams
+</span><span class="n">vect</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">min_df</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)).</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+
+<span class="n">X_train_vectorized</span> <span class="o">=</span> <span class="n">vect</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="c1"># now checking the number of words 
+</span><span class="nb">len</span><span class="p">(</span><span class="n">vect</span><span class="p">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>198917
+</code></pre></div></div>
+
+<p>The number of features has increased to ~ 200 thousands. Although n-grams are powerful at capturing meaning, long sequences can cause an explosion to the number of features.</p>
+
+<p>Now I’m going to check the performance of an logistic regression model with using the vectorizer with the added n-grams. As seen below, the accuracy did improve to 95% from 92%.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_vectorized</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">vect</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'AUC: '</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/sklearn/linear_model/_logistic.py:938: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+
+
+AUC:  0.9594770780721797
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># check out what bi-grams are associated with negative and positive reviews
+</span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">vect</span><span class="p">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+
+<span class="n">sorted_coef_index</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">argsort</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'Smallest Coefs:</span><span class="se">\n</span><span class="s">{}</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">feature_names</span><span class="p">[</span><span class="n">sorted_coef_index</span><span class="p">[:</span><span class="mi">10</span><span class="p">]]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Largest Coefs: </span><span class="se">\n</span><span class="s">{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">feature_names</span><span class="p">[</span><span class="n">sorted_coef_index</span><span class="p">[:</span><span class="o">-</span><span class="mi">11</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Smallest Coefs:
+['no good' 'not happy' 'not worth' 'junk' 'worst' 'not satisfied'
+ 'garbage' 'not good' 'defective' 'terrible']
+
+Largest Coefs: 
+['excelent' 'excelente' 'excellent' 'not bad' 'exelente' 'perfect'
+ 'awesome' 'no problems' 'no issues' 'perfecto']
+</code></pre></div></div>
+
+<p>Performing the same test I did earlier to check the logic of the model regarding negative and positive reviews. It is now returning the desired behavior.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Reviews are now correctly identified
+</span><span class="k">print</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">vect</span><span class="p">.</span><span class="n">transform</span><span class="p">([</span><span class="s">'not an issue, phone is working'</span><span class="p">,</span>
+                                    <span class="s">'an issue, phone is not working'</span><span class="p">])))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1 0]
+</code></pre></div></div>
+
+<p>Vectorizers in Python are very flexibile and support many other tasks  like removing stop words and lemmatization [1].</p>
+
+<h1 id="refereneces">Refereneces</h1>
+
+<p><a href="https://scikit-learn.org/">1. Scikit-learn</a></p>
+
+<p><a href="https://docs.scipy.org/doc/numpy/reference/">2</a></p>
+
+<p>[3] (https://www.coursera.org/learn/python-text-mining)</p>
+
+<p>[4] Applied text Mining in Python course https://www.coursera.org/learn/python-text-mining</p>
+
+<p>[5] https://en.wikipedia.org/wiki/Document-term_matrix
+[6] http://www.tfidf.com/</p>
+
+  </div><a class="u-url" href="/jekyll/update/2020/05/05/NLP-SA.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Adam Obaid</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Adam Obaid</li><li><a class="u-email" href="mailto:adamobaid@outlook.com">adamobaid@outlook.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/adamobaid"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">adamobaid</span></a></li><li><a href="https://www.twitter.com/adamobaid4"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">adamobaid4</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>MSc. Electrical Engineering. Software developer. Former research assistant at CEM Lab, McGill</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

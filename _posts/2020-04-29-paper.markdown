@@ -1,0 +1,8 @@
+---
+layout: post
+title:  "Paper: Numerical Algorithm Design and Analysis"
+date:   2018-06-06 19:26:00 -0400
+categories: jekyll update
+---
+
+The goal is to design an equation which approximates the solution to the famous Wave-equation, or Maxwell's equations (Maxwell likes inventing things that can't be solved analytically), and therefore simulating electromagnetic radiations inside antennas, radars, satelites, and other telecommunications devices. I designed and developed equation / algorithm that adaptively prioritize regions of complex geometry within devices, and therefore produces a more accurate solution that is less costly. [Publication](https://escholarship.mcgill.ca/concern/theses/79408062n?locale=en)
