@@ -8,7 +8,8 @@ In 2016 I joined the [Computational EM Lab](http://www.compem.ece.mcgill.ca/) at
 
 In 2017 I started working as a software developer at [MicrowaveSoft](http://microwavesoft.com/), a startup company that specializes in communication services and products. I developed scalable predictive algorithms to model RF radiations. 
 
-In 2019 I joined [Cerence Inc.](https://www.cerence.com/) as NLU Software Analyst, where I worked on coversational AI and NLU systems for in-vehicle Intelligent Assistant. I analyzed language models and improved the accuracy of NLU/NLP components in collaboration with research scientists.  
+In 2019 I joined [Cerence Inc.](https://www.cerence.com/) as NLU Software Analyst, where I worked on AI Voice assistant for cars. I tested, analyzed and improved NLU and NLP components and services. 
+
 
 I'm interested in Software Developement, Sequence modeling (NLP, Time-Series)  
 
