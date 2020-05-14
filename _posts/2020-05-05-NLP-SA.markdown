@@ -311,8 +311,6 @@ print('\n\nX_train shape:', X_train.shape)
 
 ### Features Extraction
 
-1. Bag of Words Model
-
 Before the data is fed into an algorithm, it needs to be converted into a form that the algorithm can work with. i.e., the data needs to be represented numericlly. When dealing with text tasks, the **Bag of Words (BoW)** model is a popular approach. 
 
 Using Scikit in Python we have access to `CountVectorizer` allows us to use BoW by convertng a collection of text documents into a matrix of words counts - works by first tokenizing the data and then building the vocabulary.
@@ -472,7 +470,6 @@ print('Largest Coefs: \n{}'.format(feature_names[sorted_coef_index[:-11:-1]]))
 
 Looking at the 10 smallest and 10 largets model cofficients after sorting them, it is evident that the model has connected words like disappointing, garbage, and unusable to negative reviews. And words like excellent, love and amazing ot positive reviews. The 10 largest coefficients are being indexed using [:-11:-1] so the list returned is in order of largest to smallest
 
-2. Tf-idf 
 
 Term Frequency - Inverse Document Frequency [6]. Allows to weight words in terms of how important they are in a document where high weight is given to terms that appear frequently in a particular document, but don't appear much in the corpus. 
 
@@ -668,6 +665,12 @@ Vectorizers in Python are very flexibile and support many other tasks  like remo
 
 
 [1. Scikit-learn](https://scikit-learn.org/)
-[2. SciPy](https://docs.scipy.org/doc/numpy/reference/)
-[4. Applied text Mining](https://www.coursera.org/learn/python-text-mining) 
 
+[2](https://docs.scipy.org/doc/numpy/reference/)
+
+[3] (https://www.coursera.org/learn/python-text-mining)
+
+[4] Applied text Mining in Python course https://www.coursera.org/learn/python-text-mining
+
+[5] https://en.wikipedia.org/wiki/Document-term_matrix
+[6] http://www.tfidf.com/
