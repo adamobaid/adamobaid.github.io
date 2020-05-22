@@ -7,15 +7,15 @@
 <meta name="generator" content="Jekyll v3.8.7" />
 <meta property="og:title" content="NLP Classificaiton Model for Sentiment Analysis" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors for the machine learning models." />
-<meta property="og:description" content="While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors for the machine learning models." />
+<meta name="description" content="While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors." />
+<meta property="og:description" content="While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors." />
 <link rel="canonical" href="http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html" />
 <meta property="og:url" content="http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html" />
 <meta property="og:site_name" content="Adam Obaid" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-05-05T19:26:00-04:00" />
 <script type="application/ld+json">
-{"headline":"NLP Classificaiton Model for Sentiment Analysis","dateModified":"2020-05-05T19:26:00-04:00","datePublished":"2020-05-05T19:26:00-04:00","url":"http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html"},"description":"While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors for the machine learning models.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html"},"url":"http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html","description":"While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors.","dateModified":"2020-05-05T19:26:00-04:00","datePublished":"2020-05-05T19:26:00-04:00","headline":"NLP Classificaiton Model for Sentiment Analysis","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Adam Obaid" /></head>
 <body><header class="site-header" role="banner">
@@ -45,13 +45,11 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors for the machine learning models.</p>
+    <p>While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors.</p>
 
 <p><a href="https://github.com/adamobaid/NLP">Repositoary</a></p>
 
 <p>I used a logistic regression model to predict negative/positive reviews after using a Bag of Words model to generate features from text.</p>
-
-<p>Tags: Scikit-learn, Numpy and</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
@@ -320,10 +318,6 @@ X_train shape: (231207,)
 
 <h3 id="features-extraction">Features Extraction</h3>
 
-<ol>
-  <li>Bag of Words Model</li>
-</ol>
-
 <p>Before the data is fed into an algorithm, it needs to be converted into a form that the algorithm can work with. i.e., the data needs to be represented numericlly. When dealing with text tasks, the <strong>Bag of Words (BoW)</strong> model is a popular approach.</p>
 
 <p>Using Scikit in Python we have access to <code class="highlighter-rouge">CountVectorizer</code> allows us to use BoW by convertng a collection of text documents into a matrix of words counts - works by first tokenizing the data and then building the vocabulary.</p>
@@ -455,10 +449,6 @@ Largest Coefs:
 </code></pre></div></div>
 
 <p>Looking at the 10 smallest and 10 largets model cofficients after sorting them, it is evident that the model has connected words like disappointing, garbage, and unusable to negative reviews. And words like excellent, love and amazing ot positive reviews. The 10 largest coefficients are being indexed using [:-11:-1] so the list returned is in order of largest to smallest</p>
-
-<ol>
-  <li>Tf-idf</li>
-</ol>
 
 <p>Term Frequency - Inverse Document Frequency [6]. Allows to weight words in terms of how important they are in a document where high weight is given to terms that appear frequently in a particular document, but don’t appear much in the corpus.</p>
 
