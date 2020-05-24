@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "NLP Classificaiton Model for Sentiment Analysis"
+title:  "NLP Classification Model for Sentiment Analysis"
 date:   2020-05-05 19:26:00 -0400
 categories: jekyll update
 ---
