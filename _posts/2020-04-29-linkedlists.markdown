@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Linked lists implementation in Python"
-date:   2020 - 05 - 08 19: 26: 00 - 0400
+date:   2020-05-08 19:26:00 -0400
 categories: jekyll update
 ---
 
