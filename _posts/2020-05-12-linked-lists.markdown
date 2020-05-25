@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Linked Lists data structure in Python"
-date:   2020 - 04 - 18 19: 26: 00 - 0400
+date:   2020-04-18 19:26:00 -0400
 categories: jekyll update
 ---
 
