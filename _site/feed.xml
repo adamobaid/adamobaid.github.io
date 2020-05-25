@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-12T20:07:00-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Adam Obaid</title><subtitle>MSc. Electrical Engineering. Software developer. Former research assistant at CEM Lab, McGill</subtitle><entry><title type="html">NLP Classificaiton Model for Sentiment Analysis</title><link href="http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html" rel="alternate" type="text/html" title="NLP Classificaiton Model for Sentiment Analysis" /><published>2020-05-05T19:26:00-04:00</published><updated>2020-05-05T19:26:00-04:00</updated><id>http://localhost:4000/jekyll/update/2020/05/05/NLP-SA</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html">&lt;p&gt;While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors for the machine learning models.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-05-25T07:34:42-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Adam Obaid</title><subtitle>MSc. Electrical Engineering. Software developer. Former research assistant at CEM Lab, McGill</subtitle><entry><title type="html">NLP Classification Model for Sentiment Analysis</title><link href="http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html" rel="alternate" type="text/html" title="NLP Classification Model for Sentiment Analysis" /><published>2020-05-05T19:26:00-04:00</published><updated>2020-05-05T19:26:00-04:00</updated><id>http://localhost:4000/jekyll/update/2020/05/05/NLP-SA</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2020/05/05/NLP-SA.html">&lt;p&gt;While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://github.com/adamobaid/NLP&quot;&gt;Repositoary&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;I used a logistic regression model to predict negative/positive reviews after using a Bag of Words model to generate features from text.&lt;/p&gt;
-
-&lt;p&gt;Tags: Scikit-learn, Numpy and&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
@@ -273,10 +271,6 @@ X_train shape: (231207,)
 
 &lt;h3 id=&quot;features-extraction&quot;&gt;Features Extraction&lt;/h3&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;Bag of Words Model&lt;/li&gt;
-&lt;/ol&gt;
-
 &lt;p&gt;Before the data is fed into an algorithm, it needs to be converted into a form that the algorithm can work with. i.e., the data needs to be represented numericlly. When dealing with text tasks, the &lt;strong&gt;Bag of Words (BoW)&lt;/strong&gt; model is a popular approach.&lt;/p&gt;
 
 &lt;p&gt;Using Scikit in Python we have access to &lt;code class=&quot;highlighter-rouge&quot;&gt;CountVectorizer&lt;/code&gt; allows us to use BoW by convertng a collection of text documents into a matrix of words counts - works by first tokenizing the data and then building the vocabulary.&lt;/p&gt;
@@ -408,10 +402,6 @@ Largest Coefs:
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Looking at the 10 smallest and 10 largets model cofficients after sorting them, it is evident that the model has connected words like disappointing, garbage, and unusable to negative reviews. And words like excellent, love and amazing ot positive reviews. The 10 largest coefficients are being indexed using [:-11:-1] so the list returned is in order of largest to smallest&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Tf-idf&lt;/li&gt;
-&lt;/ol&gt;
 
 &lt;p&gt;Term Frequency - Inverse Document Frequency [6]. Allows to weight words in terms of how important they are in a document where high weight is given to terms that appear frequently in a particular document, but don’t appear much in the corpus.&lt;/p&gt;
 
@@ -574,20 +564,15 @@ Largest Coefs:
 
 &lt;p&gt;&lt;a href=&quot;https://scikit-learn.org/&quot;&gt;1. Scikit-learn&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://docs.scipy.org/doc/numpy/reference/&quot;&gt;2&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.scipy.org/doc/numpy/reference/&quot;&gt;2. SciPy&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;[3] (https://www.coursera.org/learn/python-text-mining)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/python-text-mining&quot;&gt;3. Applied text Mining in Python course&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;[4] Applied text Mining in Python course https://www.coursera.org/learn/python-text-mining&lt;/p&gt;
+&lt;p&gt;[6. Tfidf] http://www.tfidf.com/&lt;/p&gt;</content><author><name></name></author><summary type="html">While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors.</summary></entry><entry><title type="html">Working with APIs and Pandas in Python</title><link href="http://localhost:4000/jekyll/update/2020/05/01/OOP.html" rel="alternate" type="text/html" title="Working with APIs and Pandas in Python" /><published>2020-05-01T19:26:00-04:00</published><updated>2020-05-01T19:26:00-04:00</updated><id>http://localhost:4000/jekyll/update/2020/05/01/OOP</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2020/05/01/OOP.html">&lt;p&gt;Employee Manamgenet Library in Python: Employees will be represented as objects and each employee will have attributes and functions they can perform. I will add the ability to retreive employee data from an API, store data in a Pandas DataFrame for further Analysis. Documented source code can be found in this &lt;a href=&quot;https://github.com/adamobaid/Python-OOP&quot;&gt;repository&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;[5] https://en.wikipedia.org/wiki/Document-term_matrix
-[6] http://www.tfidf.com/&lt;/p&gt;</content><author><name></name></author><summary type="html">While reviewing some NLP notes I’ve taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors for the machine learning models.</summary></entry><entry><title type="html">Employee Management System using Python &amp;amp; Pandas</title><link href="http://localhost:4000/jekyll/update/2020/05/01/OOP.html" rel="alternate" type="text/html" title="Employee Management System using Python &amp; Pandas" /><published>2020-05-01T19:26:00-04:00</published><updated>2020-05-01T19:26:00-04:00</updated><id>http://localhost:4000/jekyll/update/2020/05/01/OOP</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2020/05/01/OOP.html">&lt;p&gt;In this post I’m going to explore how OOP concepts such as abstraction, inheritance, encapsulation and other nitty-gritty details are applied in Python by building an Employee Management Library for company X. Employees will be represented as objects and each employee will have attributes and functions they can perform. After the basics, I will add the ability to retreive employee data from a remote url, explore the structure of the remote data and store it in a Pandas DataFrame for further work.  Documented source code can be found in this &lt;a href=&quot;https://github.com/adamobaid/Python-OOP&quot;&gt;repository&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Object-Oriented programming is based on the idea of storing data and behaviors by wrapping them with structures called Objects. Objects are created and customized using classes. Classes can be thought of as a blueprint for a behavior that needs to be implemented.&lt;/p&gt;
 
-&lt;p&gt;Object-Oriented programming is based on the idea of storing data and behavior by wrapping them with structures called Objects. In OOP theory, objects are created and customized using classes. Classes can be thought of as a blueprint for a behavior that needs to be implemented.&lt;/p&gt;
-
-&lt;h1 id=&quot;employee-management-system&quot;&gt;Employee Management System&lt;/h1&gt;
-
-&lt;p&gt;&lt;strong&gt;Summary of concepts / featurs:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Summary of concepts:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Object attributes and class attributes&lt;/li&gt;
@@ -1047,7 +1032,7 @@ The length of an employee is  10
   &lt;li&gt;&lt;a href=&quot;https://requests.readthedocs.io/en/master/&quot;&gt;Requests: HTTP for Humans&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.python.org/3/reference/datamodel.html&quot;&gt;C. Schafer OOP Tutorial&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=cKPlPJyQrt4&quot;&gt;J. Powell: PyData 2017&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</content><author><name></name></author><summary type="html">In this post I’m going to explore how OOP concepts such as abstraction, inheritance, encapsulation and other nitty-gritty details are applied in Python by building an Employee Management Library for company X. Employees will be represented as objects and each employee will have attributes and functions they can perform. After the basics, I will add the ability to retreive employee data from a remote url, explore the structure of the remote data and store it in a Pandas DataFrame for further work. Documented source code can be found in this repository</summary></entry><entry><title type="html">Linked Lists data structure in Python</title><link href="http://localhost:4000/jekyll/update/2020/04/18/linked-lists.html" rel="alternate" type="text/html" title="Linked Lists data structure in Python" /><published>2020-04-18T19:26:00-04:00</published><updated>2020-04-18T19:26:00-04:00</updated><id>http://localhost:4000/jekyll/update/2020/04/18/linked-lists</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2020/04/18/linked-lists.html">&lt;p&gt;A singly linked List can be thought of as a collection of elements (data points) where each element points to the next one, ending with the “tail” element which points to Nothing. In doubly linked lists, elements also reference their previous neighbor.&lt;/p&gt;
+&lt;/ol&gt;</content><author><name></name></author><summary type="html">Employee Manamgenet Library in Python: Employees will be represented as objects and each employee will have attributes and functions they can perform. I will add the ability to retreive employee data from an API, store data in a Pandas DataFrame for further Analysis. Documented source code can be found in this repository</summary></entry><entry><title type="html">Linked Lists data structure in Python</title><link href="http://localhost:4000/jekyll/update/2020/04/18/linked-lists.html" rel="alternate" type="text/html" title="Linked Lists data structure in Python" /><published>2020-04-18T19:26:00-04:00</published><updated>2020-04-18T19:26:00-04:00</updated><id>http://localhost:4000/jekyll/update/2020/04/18/linked-lists</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2020/04/18/linked-lists.html">&lt;p&gt;A singly linked List can be thought of as a collection of elements (data points) where each element points to the next one, ending with the “tail” element which points to Nothing. In doubly linked lists, elements also reference their previous neighbor.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
@@ -1202,183 +1187,17 @@ In a doubly linked list, an extra operation is needed, which is to update the pr
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;I will soon add more advanced operations :)&lt;/p&gt;</content><author><name></name></author><summary type="html">A singly linked List can be thought of as a collection of elements (data points) where each element points to the next one, ending with the “tail” element which points to Nothing. In doubly linked lists, elements also reference their previous neighbor.</summary></entry><entry><title type="html">Building a Pesonal Blog using Flask and SQLite</title><link href="http://localhost:4000/jekyll/update/2020/04/02/blog-post-2.html" rel="alternate" type="text/html" title="Building a Pesonal Blog using Flask and SQLite" /><published>2020-04-02T19:26:00-04:00</published><updated>2020-04-02T19:26:00-04:00</updated><id>http://localhost:4000/jekyll/update/2020/04/02/blog-post-2</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2020/04/02/blog-post-2.html">&lt;p&gt;I recently experiemnt with the Flask framework in Python and I ended up building a fullly functional web app and deployed it to a linux server. This is summary of some of the design aspects, the full code can be found in this &lt;a href=&quot;https://github.com/adamobaid/Flask-app&quot;&gt;repository&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I will soon add more advanced operations :)&lt;/p&gt;</content><author><name></name></author><summary type="html">A singly linked List can be thought of as a collection of elements (data points) where each element points to the next one, ending with the “tail” element which points to Nothing. In doubly linked lists, elements also reference their previous neighbor.</summary></entry><entry><title type="html">Paper: Numerical Algorithm Design and Analysis</title><link href="http://localhost:4000/jekyll/update/2018/06/06/paper.html" rel="alternate" type="text/html" title="Paper: Numerical Algorithm Design and Analysis" /><published>2018-06-06T19:26:00-04:00</published><updated>2018-06-06T19:26:00-04:00</updated><id>http://localhost:4000/jekyll/update/2018/06/06/paper</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2018/06/06/paper.html">&lt;p&gt;There are certain problems in physics that&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Project Overview&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In this publication I examined the current algorithms used to solve electromagnetic wave probelms, such as solving the wave-equation inside some complex geometry or structure. This is done to know the different features of the electric and magnetic fields inside that system, from which many optimizations and design improvements can be deduced.&lt;/p&gt;
 
-&lt;p&gt;I began writing the app in modules scattered here and there, but then I re-structured it into a package where I seperated the data structure models, templates, routes and views. I integrated several features such that users of my blog can login, logout, create posts, update their profile information and reset their passwords.&lt;/p&gt;
+&lt;p&gt;Finite Element Methods (FEM) is a group of numerical algorithms that are good at this task. They divide the problem space into segments called &lt;code class=&quot;highlighter-rouge&quot;&gt;elements&lt;/code&gt; and solve an equation for each element, finaly combining them to produce the final solution.&lt;/p&gt;
 
+&lt;p&gt;In this &lt;a href=&quot;https://escholarship.mcgill.ca/concern/theses/79408062n?locale=en&quot;&gt;Publication&lt;/a&gt; I developed a set of algorithms that does the following:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;I created several routes like for users to write new posts &lt;code class=&quot;highlighter-rouge&quot;&gt;@app.route(&quot;/post/new&quot;)&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;I created templates for each route &amp;amp; extended their style from the layout file I creatd&lt;/li&gt;
-  &lt;li&gt;I designed the database models for posts and users and used &lt;code class=&quot;highlighter-rouge&quot;&gt;SQLALCHemy&lt;/code&gt; extension&lt;/li&gt;
-  &lt;li&gt;I implemented forms so that users can submit login, logout and registeraiton requests&lt;/li&gt;
-  &lt;li&gt;I added user Authentication functionality such as hashing user’s passwords with &lt;code class=&quot;highlighter-rouge&quot;&gt;Bcrypt&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;I generated secure time sensitive tokens so that only allowed user can reset password&lt;/li&gt;
-  &lt;li&gt;I implemented email reset functionality for users using &lt;code class=&quot;highlighter-rouge&quot;&gt;Dangerous&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;I added custom pagination queries so that only a certain number of queries show on a given page&lt;/li&gt;
-  &lt;li&gt;I deployed the app to a linux server using using Nginx and GUnicorn on linode.com&lt;/li&gt;
+  &lt;li&gt;solves regions of complex geometry with higher-order polynomial functions&lt;/li&gt;
+  &lt;li&gt;solves regions of less complex geometry with lower-order polynomial functions&lt;/li&gt;
+  &lt;li&gt;adaptively subdivides the problem space based on the previous rules until a solution is found&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;design&quot;&gt;Design:&lt;/h2&gt;
-&lt;p&gt;In order to store the Posts and User information data for the blog, I needed to setup a database and integrate it with the app. This will allow users to create posts, update thier account information, and most importantly register and create accounts.&lt;/p&gt;
-
-&lt;h3 id=&quot;database-models--sqlalchemy&quot;&gt;Database models / SQLALCHemy&lt;/h3&gt;
-
-&lt;p&gt;I creatd a class called User and a class called Post. Both classes inhert from db.Model. Within these lasses I defined the columns needed for the blog users and posts. This is done by specifying several parameters to the Column() inherted from db.Model. For example, for the id column, I defined it as intger type and as the primary key of the table. For the username column, I defined it to be a string and added a condition that it must be unique (two users can’t have the same username).&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class User(db.Model, UserMixin):
-id = db.Column(db.Integer, primary_key=True)
-username = db.Column(db.String(20), unique=True, nullable=False)
-email = db.Column(db.String(120), unique=True, nullable=False)
-image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
-password = db.Column(db.String(60), nullable=False)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;I did the same to create a table that stores the posts created by each user. Notice that both tables have the &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt; column as primary key. The post table will have a title, date_posted, content and&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class Post(db.Model):
-id = db.Column(db.Integer, primary_key=True)
-title = db.Column(db.String(100), nullable=False)
-date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-content = db.Column(db.Text, nullable=False)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Because of the fact that users will write posts, there will be a relationship between the two tables (1 to many relationship), as one user is allowed to publish multiple posts. To account for that, I created a &lt;code class=&quot;highlighter-rouge&quot;&gt;posts&lt;/code&gt; attribute which contains a relationship with the &lt;code class=&quot;highlighter-rouge&quot;&gt;Post&lt;/code&gt; table. In SQLALCHemy we can specify a &lt;code class=&quot;highlighter-rouge&quot;&gt;backref&lt;/code&gt; which allows us to access posts created by the user.&lt;/p&gt;
-
-&lt;p&gt;To do this, in the Post Model I added:&lt;/p&gt;
-
- 	posts = db.relationship(‘Post’, backref=’author’, lazy=True)
-
-&lt;p&gt;And in the User model I added:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Note that &lt;code class=&quot;highlighter-rouge&quot;&gt;posts&lt;/code&gt; in the User model is not a column, it is just running a query on the table in the background that grabs any posts from a given user.&lt;/p&gt;
-
-&lt;h2 id=&quot;querying-the-databse-using-sqlite&quot;&gt;Querying the databse using SQLite&lt;/h2&gt;
-
-&lt;p&gt;Navigate to the app folder using the &lt;code class=&quot;highlighter-rouge&quot;&gt;Terminal&lt;/code&gt; on Mac or &lt;code class=&quot;highlighter-rouge&quot;&gt;cmd&lt;/code&gt; in Windows and invoke the Python interpreter. The database instance model can be imported and queried as follows:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Navigate to the app directory `/flask_app/
-&amp;gt;&amp;gt;&amp;gt;from flaskblog.models import db
-# create the database instance
-&amp;gt;&amp;gt;&amp;gt;db.create_all()
-# import Post and User Model
-&amp;gt;&amp;gt;&amp;gt;from flasblog.models import Post, User
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Adding data to the tables&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;user_1 = User(username='Adam', email='adamobaid@outlook.com', password='password')
-post_1 = Post(title = 'First_Post', content='Hello World!', user_id=user_1.id)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;A unique id and default picture will be assigned to user_1 as per the design of the User model. Also note the the password is hashed in final app. Now to add the user and post:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;db.session.add(use_1)
-db.session.add(post_1)
-db.session.commit()
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now I can query the database the with following commands:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Return all users or .first() for first user
-User.query.all()
-&amp;gt;&amp;gt;&amp;gt; [User('Adam', 'adamobaid@outlook.com', 'default.jpg')]
-# filter the users by specifying a username
-User.query.filter_by(username='Adam').all()
-&amp;gt;&amp;gt;&amp;gt; [User('Adam', 'adamobaid@outlook.com', 'default.jpg')]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;I added more posts and users to demonstrate more queries:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;To iterate over the user’s posts&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for user in user.posts:
-	print(post.title)
-
-&amp;gt;&amp;gt;&amp;gt; First_Post
-&amp;gt;&amp;gt;&amp;gt; Seond_Post
-&amp;gt;&amp;gt;&amp;gt; Third_Post
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Querying the Post table directly:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;post = Post.query.first()
-post
-&amp;gt;&amp;gt;&amp;gt;[User('Adam', 'adamobaid@outlook.com', 'default.jpg')]
-# get the id of the user who created the post
-post.user_id
-1
-# using backref in User table / posts relationship:
-posts.author
-User('Adam', 'adamobaid@outlook.com', 'default.jpg')
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Adding pagination queries&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;In blog app I will be querying the posts made by the users to display them in different pages, but with the possibility of so mant posts, a page will be slow to load and will look crowded. To avoid this, I added custom SQL pagination queries to keep the number of posts per page to a sepcific number. So for example instead of sorting posts from newest to oldest like &lt;code class=&quot;highlighter-rouge&quot;&gt;post.date_posted&lt;/code&gt;, I loaded certain number of posts in one page, and displyed numbres for next pages at the bottom. A useful function provided by SQLALChemy is &lt;code class=&quot;highlighter-rouge&quot;&gt;query.paginate()&lt;/code&gt; which is similar to `query.all() but it takes certai parameters.&lt;/p&gt;
-
-&lt;p&gt;invoking &lt;code class=&quot;highlighter-rouge&quot;&gt;posts = Post.query.paginate()&lt;/code&gt; returns a pagination object. We can explore the methods associated that object to see what we can do with it:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; posts = Post.query.paginate()
-&amp;gt;&amp;gt;&amp;gt; dir(posts)
-['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'has_next', 'has_prev', 'items', 'iter_pages', 'next', 'next_num', 'page', 'pages', 'per_page', 'prev', 'prev_num', 'query', 'total']
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;I already demonstrated some of them like &lt;code class=&quot;highlighter-rouge&quot;&gt;query&lt;/code&gt;. I also see attributes like : &lt;code class=&quot;highlighter-rouge&quot;&gt;items&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;iter_pages&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;next&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;page&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;per_page&lt;/code&gt;. These are very useful for the pagination task as we can use them to specifiy certain number of posts per pages.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# default per_page is 20 posts per page
-&amp;gt;&amp;gt;&amp;gt; posts.per_page
-20
-# current page I'm at
-&amp;gt;&amp;gt;&amp;gt; posts.page
-1
-# using the page attribute I switch to the second page (essentially a row)
-&amp;gt;&amp;gt;&amp;gt; posts = Post.query.paginate(page=2)
-# loop over the posts in that page
-&amp;gt;&amp;gt;&amp;gt; for post in posts.items:
-...     print(post)
-... 
-Post('Frst Post', '2018-05-02 22:49:01.367786')
-Post('Second Post', '2018-05-02 22:49:01.367868')
-Post('Third Post', '2018-05-02 22:49:01.367958')
-&amp;gt;&amp;gt;&amp;gt; 
-# I see we have 3 posts in the second page. 
-# Using per_page attribute to get 5 posts per page
-posts = Post.query.paginate(per_page=5) At this point this logic is ready to be added to the models above. 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;deploying-the-app-to-a-linux-server-from-scratch&quot;&gt;Deploying the App to a Linux server from scratch&lt;/h2&gt;
-&lt;p&gt;Steps I’ve taken:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Prepared a linux ubuntu system by performing necassary updates, setting hostname&lt;/li&gt;
-  &lt;li&gt;Performing best practices like adding new sudo user other than root&lt;/li&gt;
-  &lt;li&gt;Setup ssh key-based authenticaion for security enahcenement &amp;amp; Updating permissions &amp;amp; Disallow root logins against ssh&lt;/li&gt;
-  &lt;li&gt;Setting up a ufw firewall and allowing only certain ports&lt;/li&gt;
-  &lt;li&gt;Creating requirements.txt to capture what we need to install in the server for the app to work&lt;/li&gt;
-  &lt;li&gt;Creating virtual env on the server&lt;/li&gt;
-  &lt;li&gt;set up environement keys using configuration files&lt;/li&gt;
-  &lt;li&gt;run the app on the server &lt;code class=&quot;highlighter-rouge&quot;&gt;export Flask_APP=run.py&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;flask run --host=0.0.0.0&lt;/code&gt; now its working at xxx.xxx.xx.xxx:5000&lt;/li&gt;
-  &lt;li&gt;install ngnix and gunicorn&lt;/li&gt;
-  &lt;li&gt;gunicorn handles python code&lt;/li&gt;
-  &lt;li&gt;create nginx config file&lt;/li&gt;
-  &lt;li&gt;i had an issue start nginx, but with command you can get a hint at whats causing the problem:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;nginx -t -c /etc/nginx/nginx.conf&lt;/code&gt;. It turns out my problem was a syntax error in the config files of nginx.&lt;/li&gt;
-  &lt;li&gt;run gunicorn with a number of workers that is 2 x number of coures on your machine +1&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;to be continued soon!&lt;/p&gt;
-
-&lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.python.org/3/&quot;&gt;Python 3.8 Documentations&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://flask.palletsprojects.com/&quot;&gt;Flask Documentations&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.sqlalchemy.org/en/13/&quot;&gt;SQLAlchemy ORM&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=MwZwr5Tvyxo&quot;&gt;C. Schafer - Flask Tutorial Series&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;&quot;&gt;nginx documentations&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">I recently experiemnt with the Flask framework in Python and I ended up building a fullly functional web app and deployed it to a linux server. This is summary of some of the design aspects, the full code can be found in this repository</summary></entry><entry><title type="html">Paper: Numerical Algorithm Design and Analysis</title><link href="http://localhost:4000/jekyll/update/2018/06/06/paper.html" rel="alternate" type="text/html" title="Paper: Numerical Algorithm Design and Analysis" /><published>2018-06-06T19:26:00-04:00</published><updated>2018-06-06T19:26:00-04:00</updated><id>http://localhost:4000/jekyll/update/2018/06/06/paper</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2018/06/06/paper.html">&lt;p&gt;The goal is to design an equation which approximates the solution to the famous Wave-equation, or Maxwell’s equations (Maxwell likes inventing things that can’t be solved analytically), and therefore simulating electromagnetic radiations inside antennas, radars, satelites, and other telecommunications devices. I designed and developed equation / algorithm that adaptively prioritize regions of complex geometry within devices, and therefore produces a more accurate solution that is less costly. &lt;a href=&quot;https://escholarship.mcgill.ca/concern/theses/79408062n?locale=en&quot;&gt;Publication&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">The goal is to design an equation which approximates the solution to the famous Wave-equation, or Maxwell’s equations (Maxwell likes inventing things that can’t be solved analytically), and therefore simulating electromagnetic radiations inside antennas, radars, satelites, and other telecommunications devices. I designed and developed equation / algorithm that adaptively prioritize regions of complex geometry within devices, and therefore produces a more accurate solution that is less costly. Publication</summary></entry></feed>
+&lt;p&gt;When applied to electrical transmission line prblems, the new method produces more accurte solutions compared previous classical methods.&lt;/p&gt;</content><author><name></name></author><summary type="html">There are certain problems in physics that</summary></entry></feed>

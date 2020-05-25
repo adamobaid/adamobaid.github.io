@@ -1,18 +1,17 @@
 ---
 layout: post
-title:  "NLP Classificaiton Model for Sentiment Analysis"
+title:  "Clssification of amazon reviews: Sentiment analysis"
 date:   2020-05-05 19:26:00 -0400
 categories: jekyll update
 ---
 
-While reviewing some NLP notes I've taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors for the machine learning models. 
+While reviewing some NLP notes I've taken during an online course, I came across an intersting dataset which contains product reviews on Amazon. This particular subset of it conains reviews for samsung phones. I used to identify and extract features from text and transform them into feature vectors. 
 
 [Repositoary](https://github.com/adamobaid/NLP)
 
 I used a logistic regression model to predict negative/positive reviews after using a Bag of Words model to generate features from text. 
 
 
-Tags: Scikit-learn, Numpy and 
 
 
 ```python
@@ -666,11 +665,9 @@ Vectorizers in Python are very flexibile and support many other tasks  like remo
 
 [1. Scikit-learn](https://scikit-learn.org/)
 
-[2](https://docs.scipy.org/doc/numpy/reference/)
+[2. SciPy](https://docs.scipy.org/doc/numpy/reference/)
 
-[3] (https://www.coursera.org/learn/python-text-mining)
 
-[4] Applied text Mining in Python course https://www.coursera.org/learn/python-text-mining
+[3. Applied text Mining in Python course](https://www.coursera.org/learn/python-text-mining)
 
-[5] https://en.wikipedia.org/wiki/Document-term_matrix
-[6] http://www.tfidf.com/
+[6. Tfidf] http://www.tfidf.com/

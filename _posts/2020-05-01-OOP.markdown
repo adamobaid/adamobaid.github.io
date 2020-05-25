@@ -1,21 +1,19 @@
 ---
 layout: post
-title:  "Employee Management System using Python & Pandas"
+title:  "Working with APIs and Pandas in Python"
 date:   2020-05-01 19:26:00 -0400
 categories: jekyll update
 ---
-In this post I'm going to explore how OOP concepts such as abstraction, inheritance, encapsulation and other nitty-gritty details are applied in Python by building an Employee Management Library for company X. Employees will be represented as objects and each employee will have attributes and functions they can perform. After the basics, I will add the ability to retreive employee data from a remote url, explore the structure of the remote data and store it in a Pandas DataFrame for further work.  Documented source code can be found in this [repository](https://github.com/adamobaid/Python-OOP)
 
-Object-Oriented programming is based on the idea of storing data and behavior by wrapping them with structures called Objects. In OOP theory, objects are created and customized using classes. Classes can be thought of as a blueprint for a behavior that needs to be implemented. 
+Employee Manamgenet Library in Python: Employees will be represented as objects and each employee will have attributes and functions they can perform. I will add the ability to retreive employee data from an API, store data in a Pandas DataFrame for further Analysis. Documented source code can be found in this [repository](https://github.com/adamobaid/Python-OOP)
+
+Object-Oriented programming is based on the idea of storing data and behaviors by wrapping them with structures called Objects. Objects are created and customized using classes. Classes can be thought of as a blueprint for a behavior that needs to be implemented. 
 
 
-
-# Employee Management System
-
-**Summary of concepts / featurs:**
+**Summary of concepts:**
 
 - Object attributes and class attributes
-- Object methods, class methods, static methods and special (dunder) methods
+- Object, class, static and special (dunder) methods
 - Customized repr() and str() to give class objects more readability
 - Customized add() and len() to emulate builtin behavior. 
 - Inheritance: Developer and Manager sub-classes
@@ -172,7 +170,7 @@ class Employee:
 ```python
 emp_1 = Employee('Adam', 'Obaid', 50000)
 emp_2 = Employee('Test', 'Employee', 60000)
-
+# operator overloading in Python is ... possible
 print('Addtion two employees is ',emp_1 + emp_2)
 
 print('The length of an employee is ', len(emp_1))
@@ -183,7 +181,7 @@ print('The length of an employee is ', len(emp_1))
 
 
 ### Propertry Decortators
-Allows us to give the class, getter, setter and deleter. This is useful whenever you have a method that changes the value of an attribute. For example, In the previous email method in the Employee class, it used to depend on first and last names properties such that if the first name was changed at a later point, the email will still keep the first name.
+Allows us to give the class, getter, setter and deleter functions (like in Java). This is useful whenever you have a method that changes the value of an attribute. For example, In the previous email method in the Employee class, it used to depend on first and last names properties such that if the first name was changed at a later point, the email will still keep the first name.
 
 
 ```python
@@ -215,9 +213,6 @@ class Employee:
         self.last = None
 ```
 
-**Note**
-- why not set setters and getters instead of using classmethod to set raise amount?
-- because raise amount propertry is not correlated with any other attribute
 
 ### Inheritance 
 
@@ -268,7 +263,7 @@ class Manager(Employee):
 
 For a previous project I needed to retreive some data from an API and then store it in a Pandas DataFrame. I will do the same here assuming that Employees data is stored somewhere on the company's website. To achieve this I created a class called `Account` which connects to the API using `requests` then fetches the Employees attributes (first name, last name, ...etc) then uses them to create Employee objects and finally, store them in a Panda's DataFrame for further work possibly. 
 
-This will act as an alternative constructor to the Employee class objects, au lie de `__init__` the main constructors. In Python,`@classmethod` is usually used to do this. For the purpose of demonstrating I will use this generic user API [https://randomuser.me/api/](https://randomuser.me/api/) as employee information. I did explore the structure of the Json response from said API and based on that I wrote below code. 
+This will act as an alternative constructor to the Employee class objects, au lie de `__init__` the main constructor. I will use this generic user API [https://randomuser.me/api/](https://randomuser.me/api/) as employee information. I explored the structure of the data from said API and based on that I wrote below code. 
 
 
 ```python
