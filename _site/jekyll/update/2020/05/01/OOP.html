@@ -3,19 +3,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Employee Management System using Python &amp; Pandas | Adam Obaid</title>
+<title>Working with APIs and Pandas in Python | Adam Obaid</title>
 <meta name="generator" content="Jekyll v3.8.7" />
-<meta property="og:title" content="Employee Management System using Python &amp; Pandas" />
+<meta property="og:title" content="Working with APIs and Pandas in Python" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="In this post I’m going to explore how OOP concepts such as abstraction, inheritance, encapsulation and other nitty-gritty details are applied in Python by building an Employee Management Library for company X. Employees will be represented as objects and each employee will have attributes and functions they can perform. After the basics, I will add the ability to retreive employee data from a remote url, explore the structure of the remote data and store it in a Pandas DataFrame for further work. Documented source code can be found in this repository" />
-<meta property="og:description" content="In this post I’m going to explore how OOP concepts such as abstraction, inheritance, encapsulation and other nitty-gritty details are applied in Python by building an Employee Management Library for company X. Employees will be represented as objects and each employee will have attributes and functions they can perform. After the basics, I will add the ability to retreive employee data from a remote url, explore the structure of the remote data and store it in a Pandas DataFrame for further work. Documented source code can be found in this repository" />
+<meta name="description" content="Employee Manamgenet Library in Python: Employees will be represented as objects and each employee will have attributes and functions they can perform. I will add the ability to retreive employee data from an API, store data in a Pandas DataFrame for further Analysis. Documented source code can be found in this repository" />
+<meta property="og:description" content="Employee Manamgenet Library in Python: Employees will be represented as objects and each employee will have attributes and functions they can perform. I will add the ability to retreive employee data from an API, store data in a Pandas DataFrame for further Analysis. Documented source code can be found in this repository" />
 <link rel="canonical" href="http://localhost:4000/jekyll/update/2020/05/01/OOP.html" />
 <meta property="og:url" content="http://localhost:4000/jekyll/update/2020/05/01/OOP.html" />
 <meta property="og:site_name" content="Adam Obaid" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-05-01T19:26:00-04:00" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2020/05/01/OOP.html"},"url":"http://localhost:4000/jekyll/update/2020/05/01/OOP.html","description":"In this post I’m going to explore how OOP concepts such as abstraction, inheritance, encapsulation and other nitty-gritty details are applied in Python by building an Employee Management Library for company X. Employees will be represented as objects and each employee will have attributes and functions they can perform. After the basics, I will add the ability to retreive employee data from a remote url, explore the structure of the remote data and store it in a Pandas DataFrame for further work. Documented source code can be found in this repository","dateModified":"2020-05-01T19:26:00-04:00","datePublished":"2020-05-01T19:26:00-04:00","headline":"Employee Management System using Python &amp; Pandas","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"headline":"Working with APIs and Pandas in Python","dateModified":"2020-05-01T19:26:00-04:00","datePublished":"2020-05-01T19:26:00-04:00","url":"http://localhost:4000/jekyll/update/2020/05/01/OOP.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2020/05/01/OOP.html"},"description":"Employee Manamgenet Library in Python: Employees will be represented as objects and each employee will have attributes and functions they can perform. I will add the ability to retreive employee data from an API, store data in a Pandas DataFrame for further Analysis. Documented source code can be found in this repository","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Adam Obaid" /></head>
 <body><header class="site-header" role="banner">
@@ -38,20 +38,18 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Employee Management System using Python &amp; Pandas</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Working with APIs and Pandas in Python</h1>
     <p class="post-meta">
       <time class="dt-published" datetime="2020-05-01T19:26:00-04:00" itemprop="datePublished">May 1, 2020
       </time></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>In this post I’m going to explore how OOP concepts such as abstraction, inheritance, encapsulation and other nitty-gritty details are applied in Python by building an Employee Management Library for company X. Employees will be represented as objects and each employee will have attributes and functions they can perform. After the basics, I will add the ability to retreive employee data from a remote url, explore the structure of the remote data and store it in a Pandas DataFrame for further work.  Documented source code can be found in this <a href="https://github.com/adamobaid/Python-OOP">repository</a></p>
+    <p>Employee Manamgenet Library in Python: Employees will be represented as objects and each employee will have attributes and functions they can perform. I will add the ability to retreive employee data from an API, store data in a Pandas DataFrame for further Analysis. Documented source code can be found in this <a href="https://github.com/adamobaid/Python-OOP">repository</a></p>
 
-<p>Object-Oriented programming is based on the idea of storing data and behavior by wrapping them with structures called Objects. In OOP theory, objects are created and customized using classes. Classes can be thought of as a blueprint for a behavior that needs to be implemented.</p>
+<p>Object-Oriented programming is based on the idea of storing data and behaviors by wrapping them with structures called Objects. Objects are created and customized using classes. Classes can be thought of as a blueprint for a behavior that needs to be implemented.</p>
 
-<h1 id="employee-management-system">Employee Management System</h1>
-
-<p><strong>Summary of concepts / featurs:</strong></p>
+<p><strong>Summary of concepts:</strong></p>
 
 <ul>
   <li>Object attributes and class attributes</li>
