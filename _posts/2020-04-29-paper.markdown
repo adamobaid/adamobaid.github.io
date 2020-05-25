@@ -5,7 +5,6 @@ date:   2018-06-06 19:26:00 -0400
 categories: jekyll update
 ---
 
-There are certain problems in physics that 
 
 In this publication I examined the current algorithms used to solve electromagnetic wave probelms, such as solving the wave-equation inside some complex geometry or structure. This is done to know the different features of the electric and magnetic fields inside that system, from which many optimizations and design improvements can be deduced. 
 
