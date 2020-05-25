@@ -1,10 +1,9 @@
 ---
 layout: post
-title:  "Linked Lists implementation in Python"
-date:   2020-05-12 19:26:00 -0400
+title:  "Paper: Numerical Algorithm Design and Analysis"
+date:   2018-06-08 19:26:00 -0400
 categories: jekyll update
 ---
-
 
 A singly linked List can be thought of as a collection of elements(data points) where each element points to the next one, ending with the “tail” element which points to Nothing. In doubly linked lists, elements also reference their previous neighbor.
 
