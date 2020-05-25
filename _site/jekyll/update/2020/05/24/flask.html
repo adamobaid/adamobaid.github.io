@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Building a web app in Python usng Flask with SQLAlchemy ORM | Adam Obaid</title>
+<meta name="generator" content="Jekyll v3.8.7" />
+<meta property="og:title" content="Building a web app in Python usng Flask with SQLAlchemy ORM" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I recently experimented with the Flask framework in Python and I ended up building a fully functional web app and deployed it to a linux server using Linode. This is summary of some of the design aspects, the full code can be found in this repository" />
+<meta property="og:description" content="I recently experimented with the Flask framework in Python and I ended up building a fully functional web app and deployed it to a linux server using Linode. This is summary of some of the design aspects, the full code can be found in this repository" />
+<link rel="canonical" href="http://localhost:4000/jekyll/update/2020/05/24/flask.html" />
+<meta property="og:url" content="http://localhost:4000/jekyll/update/2020/05/24/flask.html" />
+<meta property="og:site_name" content="Adam Obaid" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-24T19:26:00-04:00" />
+<script type="application/ld+json">
+{"headline":"Building a web app in Python usng Flask with SQLAlchemy ORM","dateModified":"2020-05-24T19:26:00-04:00","datePublished":"2020-05-24T19:26:00-04:00","url":"http://localhost:4000/jekyll/update/2020/05/24/flask.html","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll/update/2020/05/24/flask.html"},"description":"I recently experimented with the Flask framework in Python and I ended up building a fully functional web app and deployed it to a linux server using Linode. This is summary of some of the design aspects, the full code can be found in this repository","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Adam Obaid" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Adam Obaid</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Building a web app in Python usng Flask with SQLAlchemy ORM</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-05-24T19:26:00-04:00" itemprop="datePublished">May 24, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I recently experimented  with the Flask framework in Python and I ended up building a fully functional web app and deployed it to a linux server using Linode. This is summary of some of the design aspects, the full code can be found in this <a href="https://github.com/adamobaid/Flask-app">repository</a></p>
+
+<p><strong>Overview</strong></p>
+
+<p>I began writing the app in modules scattered here and there, but then I re-structured it into a package where I separated the data structure models, templates, routes and views. I integrated several features such that users of my blog can login, logout, create posts, update their profile information and reset their passwords.</p>
+
+<ul>
+  <li>I created several routes like for users to write new posts <code class="highlighter-rouge">@app.route("/post/new")</code></li>
+  <li>I created templates for each route &amp; extended their style from the layout file I created</li>
+  <li>I designed the database models for posts and users and used <code class="highlighter-rouge">SQLALCHemy</code> extension</li>
+  <li>I implemented forms so that users can submit login, logout and registration requests</li>
+  <li>I added user Authentication functionality such as hashing user’s passwords with <code class="highlighter-rouge">Bcrypt</code></li>
+  <li>I generated secure time sensitive tokens so that only allowed user can reset password</li>
+  <li>I implemented email reset functionality for users using <code class="highlighter-rouge">Dangerous</code></li>
+  <li>I added custom pagination queries so that only a certain number of queries show on a given page</li>
+  <li>I created a virtual Ubuntu environmnet on a linux server (using https://cloud.linode.com/)</li>
+</ul>
+
+<h4 id="database-design">Database Design:</h4>
+<hr />
+<p>In order to store the Posts and User information data for the blog, I needed to setup a database and integrate it with the app. This will allow users to create posts, update thier account information, and most importantly register and create accounts.</p>
+
+<h4 id="models--sqlalchemy">Models / SQLALCHemy</h4>
+
+<p>I created a class called User and a class called Post. Both classes inherit from db.Model. Within these lasses I defined the columns needed for the blog users and posts. This is done by specifying several parameters to the Column() inherited from db.Model. For example, for the id column, I defined it as intger type and as the primary key of the table. For the username column, I defined it to be a string and added a condition that it must be unique (two users can’t have the same username).</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class User(db.Model, UserMixin):
+id = db.Column(db.Integer, primary_key=True)
+username = db.Column(db.String(20), unique=True, nullable=False)
+email = db.Column(db.String(120), unique=True, nullable=False)
+image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+password = db.Column(db.String(60), nullable=False)
+</code></pre></div></div>
+
+<p>I did the same to create a table that stores the posts created by each user. Notice that both tables have the <code class="highlighter-rouge">id</code> column as primary key. The post table will have a title, date_posted, content and</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Post(db.Model):
+id = db.Column(db.Integer, primary_key=True)
+title = db.Column(db.String(100), nullable=False)
+date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+content = db.Column(db.Text, nullable=False)
+</code></pre></div></div>
+
+<p>Because of the fact that users will write posts, there will be a relationship between the two tables (1 to many relationship), as one user is allowed to publish multiple posts. To account for that, I created a <code class="highlighter-rouge">posts</code> attribute which contains a relationship with the <code class="highlighter-rouge">Post</code> table. In SQLALCHemy we can specify a <code class="highlighter-rouge">backref</code> which allows us to access posts created by the user.</p>
+
+<p>To do this, in the Post Model I added:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>posts = db.relationship('Post', backref='author', lazy=True)
+</code></pre></div></div>
+
+<p>And in the User model I added:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+</code></pre></div></div>
+
+<p>Note that <code class="highlighter-rouge">posts</code> in the User model is not a column, it is just running a query on the table in the background that grabs any posts from a given user.</p>
+
+<p><strong>Querying the database using SQLite</strong></p>
+
+<p>Navigate to the app folder using the <code class="highlighter-rouge">Terminal</code> on Mac or <code class="highlighter-rouge">cmd</code> in Windows and invoke the Python interpreter. The database instance model can be imported and queried as follows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Navigate to the app directory `/flask_app/
+&gt;&gt;&gt;from flaskblog.models import db
+# create the database instance
+&gt;&gt;&gt;db.create_all()
+# import Post and User Model
+&gt;&gt;&gt;from flasblog.models import Post, User
+</code></pre></div></div>
+
+<p><strong>Adding data to the tables</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user_1 = User(username='Adam', email='adamobaid@outlook.com', password='password')
+post_1 = Post(title = 'First_Post', content='Hello World!', user_id=user_1.id)
+</code></pre></div></div>
+
+<p>A unique id and default picture will be assigned to user_1 as per the design of the User model. Also note the the password is hashed in final app. Now to add the user and post:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>db.session.add(use_1)
+db.session.add(post_1)
+db.session.commit()
+</code></pre></div></div>
+
+<p>Now I can query the database the with following commands:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Return all users or .first() for first user
+User.query.all()
+&gt;&gt;&gt; [User('Adam', 'adamobaid@outlook.com', 'default.jpg')]
+# filter the users by specifying a username
+User.query.filter_by(username='Adam').all()
+&gt;&gt;&gt; [User('Adam', 'adamobaid@outlook.com', 'default.jpg')]
+</code></pre></div></div>
+
+<p><strong>I added more posts and users to demonstrate more queries:</strong></p>
+
+<p>To iterate over the user’s posts</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for user in user.posts:
+    print(post.title)
+
+&gt;&gt;&gt; First_Post
+&gt;&gt;&gt; Seond_Post
+&gt;&gt;&gt; Third_Post
+</code></pre></div></div>
+
+<p><strong>Querying the Post table directly:</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>post = Post.query.first()
+post
+&gt;&gt;&gt;[User('Adam', 'adamobaid@outlook.com', 'default.jpg')]
+# get the id of the user who created the post
+post.user_id
+1
+# using backref in User table / posts relationship:
+posts.author
+User('Adam', 'adamobaid@outlook.com', 'default.jpg')
+</code></pre></div></div>
+
+<p><strong>Adding pagination queries</strong></p>
+
+<p>In blog app I will be querying the posts made by the users to display them in different pages, but with the possibility of so many posts, a page will be slow to load and will look crowded. To avoid this, I added custom SQL pagination queries to keep the number of posts per page to a specific number. So for example instead of sorting posts from newest to oldest like <code class="highlighter-rouge">post.date_posted</code>, I loaded certain number of posts in one page, and showed numbers for next pages at the bottom. A useful function provided by SQLALChemy is <code class="highlighter-rouge">query.paginate()</code> which is similar to `query.all() but it takes certain parameters.</p>
+
+<p>invoking <code class="highlighter-rouge">posts = Post.query.paginate()</code> returns a pagination object. We can explore the methods associated that object to see what we can do with it:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; posts = Post.query.paginate()
+&gt;&gt;&gt; dir(posts)
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'has_next', 'has_prev', 'items', 'iter_pages', 'next', 'next_num', 'page', 'pages', 'per_page', 'prev', 'prev_num', 'query', 'total']
+</code></pre></div></div>
+
+<p>I already demonstrated some of them like <code class="highlighter-rouge">query</code>. I also see attributes like : <code class="highlighter-rouge">items</code>, <code class="highlighter-rouge">iter_pages</code>, <code class="highlighter-rouge">next</code>, <code class="highlighter-rouge">page</code>, <code class="highlighter-rouge">per_page</code>. These are very useful for the pagination task as we can use them to specify certain number of posts per pages.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># default per_page is 20 posts per page
+&gt;&gt;&gt; posts.per_page
+20
+# current page I'm at
+&gt;&gt;&gt; posts.page
+1
+# using the page attribute I switch to the second page (essentially a row)
+&gt;&gt;&gt; posts = Post.query.paginate(page=2)
+# loop over the posts in that page
+&gt;&gt;&gt; for post in posts.items:
+...     print(post)
+... 
+Post('Frst Post', '2018-05-02 22:49:01.367786')
+Post('Second Post', '2018-05-02 22:49:01.367868')
+Post('Third Post', '2018-05-02 22:49:01.367958')
+&gt;&gt;&gt; 
+# I see we have 3 posts in the second page. 
+# Using per_page attribute to get 5 posts per page
+posts = Post.query.paginate(per_page=5)
+</code></pre></div></div>
+
+<h2 id="deploying-the-app-to-a-linux-server">Deploying the App to a Linux server</h2>
+<p>will be documented soon.</p>
+
+<h1 id="references">References</h1>
+<ul>
+  <li><a href="https://docs.python.org/3/">Python 3.8 Documentations</a></li>
+  <li><a href="https://flask.palletsprojects.com/">Flask Documentations</a></li>
+  <li><a href="https://docs.sqlalchemy.org/en/13/">SQLAlchemy ORM</a></li>
+  <li><a href="https://www.youtube.com/watch?v=MwZwr5Tvyxo">C. Schafer - Flask Tutorial Series</a></li>
+</ul>
+
+
+  </div><a class="u-url" href="/jekyll/update/2020/05/24/flask.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Adam Obaid</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Adam Obaid</li><li><a class="u-email" href="mailto:adamobaid@outlook.com">adamobaid@outlook.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/adamobaid"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">adamobaid</span></a></li><li><a href="https://www.twitter.com/adamobaid4"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">adamobaid4</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>MSc. Electrical Engineering. Software developer. Former research assistant at CEM Lab, McGill</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
