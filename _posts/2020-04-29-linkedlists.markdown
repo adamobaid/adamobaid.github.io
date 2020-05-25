@@ -1,25 +1,12 @@
 ---
 layout: post
-title:  "Paper: Numerical Algorithm Design and Analysus"
-date:   2018-06-06 19:26:00 -0400
+title:  "Linked lists implementation in Python"
+date:   2020 - 05 - 08 19: 26: 00 - 0400
 categories: jekyll update
 ---
 
 
-A singly linked List can be thought of as a collection of elements(data points) where each element points to the next one, ending with the “tail” element which points to Nothing. In doubly linked lists, elements also reference their previous neighbor.
-
-
-{% highlight ruby % }
-
-
-def print_hi(name)
-    puts "Hi, #{name}"
-
-
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight % }
+A singly linked List can be thought of as a collection of elements(data points) where each element points to the next one, ending with the “tail” element which points to Nothing. In doubly linked lists, elements also reference their previous neighbour.
 
 
 ```python
@@ -68,7 +55,7 @@ class LinkedList:
 
 ```
 
-Next is to figure out how certain operations will work in the linked list. For example, to insert an element to the begining of the list, the following adjustmenets are needed:
+Next is to figure out how certain operations will work in the linked list. For example, to insert an element to the begining of the list, the following adjustments are needed:
 
 The new element must be assigned as the new head of the list
 the next property of the new element must point to the old head
@@ -101,9 +88,9 @@ def push(self, val):
 
 ```
 
-In a doubly linked list, there's an addtional step of setting the previous property of the new element to point to the old tail, that is `new_element.pervious = self.tail`
+In a doubly linked list, there's an additional step of setting the previous property of the new element to point to the old tail, that is `new_element.pervious = self.tail`
 
-**To add an element to the beginging of the list**, the process involves manipulating the head property and the pointers of the element(s). For example, in a doubly linked list:
+**To add an element to the beginning of the list**, the process involves manipulating the head property and the pointers of the element(s). For example, in a doubly linked list:
 * set the previous property of the old head to the new element
 * set the head of the list to the new element
 * set the next property of the new element to point to the old head
@@ -112,9 +99,9 @@ In a doubly linked list, there's an addtional step of setting the previous prope
 
 # Removing Elements
 
-The logic behind removing an element from the beginging of the list is similar to the above. The head of the list must now point to the new element, the new element .next will point to the old head, and the length of the list will increase by 1. In case of Dounly linked lists, there is the addtional step of updating the .previous of the old head to point to the new element too.
+The logic behind removing an element from the beginning of the list is similar to the above. The head of the list must now point to the new element, the new element .next will point to the old head, and the length of the list will increase by 1. In case of Dounly linked lists, there is the addtional step of updating the .previous of the old head to point to the new element too.
 
-A big difference between singly linked lists and doubgly linked lists takes places when removing elements from the end of the list. In the case of singly lists, the code must start by traversing the whole list from the head, until it reaches the tail, then perform the pointers update. On the other hand, In doubly lists, one can simply utilize the previous property of the tail
+A big difference between singly linked lists and doubly linked lists takes places when removing elements from the end of the list. In the case of singly lists, the code must start by traversing the whole list from the head, until it reaches the tail, then perform the pointers update. On the other hand, In doubly lists, one can simply utilize the previous property of the tail
 eliminating the need to traverse the whole list before being able to remove the last element.
 
 
@@ -163,7 +150,7 @@ def pop(self):
 
 # Removing or Inserting Elements at a specific position
 
-Because there is no notion of indices in linked lists, accessing elements as straightfroward as in arrays or lists. As seen in singly lists, when removing an element from the end, we need to traverse the whole list starting from the head until we reach the wanted position. In doubly lists, this can be improved a bit by utilizing the previous propertry, which in this case will allow us to start traveresing from the tail or the head of the list.
+Because there is no notion of indices in linked lists, accessing elements as straightforward as in arrays or lists. As seen in singly lists, when removing an element from the end, we need to traverse the whole list starting from the head until we reach the wanted position. In doubly lists, this can be improved a bit by utilizing the previous propertry, which in this case will allow us to start traversing from the tail or the head of the list.
 
 Here's an example using singly lists
 ```python
@@ -203,5 +190,7 @@ def Insert(self, idx, val):
 
     return True
 
+
+```
 
 ```

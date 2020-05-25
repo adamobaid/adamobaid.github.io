@@ -53,7 +53,7 @@
 
 <ul>
   <li>Object attributes and class attributes</li>
-  <li>Object methods, class methods, static methods and special (dunder) methods</li>
+  <li>Object, class, static and special (dunder) methods</li>
   <li>Customized repr() and str() to give class objects more readability</li>
   <li>Customized add() and len() to emulate builtin behavior.</li>
   <li>Inheritance: Developer and Manager sub-classes</li>
@@ -192,8 +192,8 @@ Salary after raise 52000
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">emp_1</span> <span class="o">=</span> <span class="n">Employee</span><span class="p">(</span><span class="s">'Adam'</span><span class="p">,</span> <span class="s">'Obaid'</span><span class="p">,</span> <span class="mi">50000</span><span class="p">)</span>
 <span class="n">emp_2</span> <span class="o">=</span> <span class="n">Employee</span><span class="p">(</span><span class="s">'Test'</span><span class="p">,</span> <span class="s">'Employee'</span><span class="p">,</span> <span class="mi">60000</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s">'Addtion two employees is '</span><span class="p">,</span><span class="n">emp_1</span> <span class="o">+</span> <span class="n">emp_2</span><span class="p">)</span>
+<span class="c1"># operator overloading in Python is ... possible
+</span><span class="k">print</span><span class="p">(</span><span class="s">'Addtion two employees is '</span><span class="p">,</span><span class="n">emp_1</span> <span class="o">+</span> <span class="n">emp_2</span><span class="p">)</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">'The length of an employee is '</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">emp_1</span><span class="p">))</span>
 </code></pre></div></div>
@@ -203,7 +203,7 @@ The length of an employee is  10
 </code></pre></div></div>
 
 <h3 id="propertry-decortators">Propertry Decortators</h3>
-<p>Allows us to give the class, getter, setter and deleter. This is useful whenever you have a method that changes the value of an attribute. For example, In the previous email method in the Employee class, it used to depend on first and last names properties such that if the first name was changed at a later point, the email will still keep the first name.</p>
+<p>Allows us to give the class, getter, setter and deleter functions (like in Java). This is useful whenever you have a method that changes the value of an attribute. For example, In the previous email method in the Employee class, it used to depend on first and last names properties such that if the first name was changed at a later point, the email will still keep the first name.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Employee</span><span class="p">:</span>
 
@@ -232,12 +232,6 @@ The length of an employee is  10
         <span class="bp">self</span><span class="p">.</span><span class="n">first</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">last</span> <span class="o">=</span> <span class="bp">None</span>
 </code></pre></div></div>
-
-<p><strong>Note</strong></p>
-<ul>
-  <li>why not set setters and getters instead of using classmethod to set raise amount?</li>
-  <li>because raise amount propertry is not correlated with any other attribute</li>
-</ul>
 
 <h3 id="inheritance">Inheritance</h3>
 
@@ -282,7 +276,7 @@ The length of an employee is  10
 
 <p>For a previous project I needed to retreive some data from an API and then store it in a Pandas DataFrame. I will do the same here assuming that Employees data is stored somewhere on the company’s website. To achieve this I created a class called <code class="highlighter-rouge">Account</code> which connects to the API using <code class="highlighter-rouge">requests</code> then fetches the Employees attributes (first name, last name, …etc) then uses them to create Employee objects and finally, store them in a Panda’s DataFrame for further work possibly.</p>
 
-<p>This will act as an alternative constructor to the Employee class objects, au lie de <code class="highlighter-rouge">__init__</code> the main constructors. In Python,<code class="highlighter-rouge">@classmethod</code> is usually used to do this. For the purpose of demonstrating I will use this generic user API <a href="https://randomuser.me/api/">https://randomuser.me/api/</a> as employee information. I did explore the structure of the Json response from said API and based on that I wrote below code.</p>
+<p>This will act as an alternative constructor to the Employee class objects, au lie de <code class="highlighter-rouge">__init__</code> the main constructor. I will use this generic user API <a href="https://randomuser.me/api/">https://randomuser.me/api/</a> as employee information. I explored the structure of the data from said API and based on that I wrote below code.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># by adding this method to class Employee
 </span><span class="o">@</span><span class="nb">classmethod</span>    
